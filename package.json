@@ -4,7 +4,7 @@
   "description": "A jQuery plugin for adding AddThis tools onto dynamically generate pages. Requires a free AddThis account.",
   "main": "dist/jquery-addthis.js",
   "scripts": {
-    "test": "gulp test",
+    "build": "gulp build",
     "docs": "./node_modules/.bin/jsdoc -c jsdoc.conf.json"
   },
   "repository": {
@@ -41,7 +41,14 @@
   "devDependencies": {
     "express": "^4.14.0",
     "gulp": "^3.9.1",
-    "jsdoc": "^3.4.2"
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-uglify": "^2.0.0",
+    "jsdoc": "^3.4.2",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.2.1",
+    "uglify-save-license": "^0.4.1"
   },
   "peerDependencies": {
     "jquery": ">=1"
