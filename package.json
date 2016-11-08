@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "A jQuery plugin for adding AddThis tools onto dynamically generate pages. Requires a free AddThis account.",
   "main": "dist/jquery-addthis.js",
+  "scripts": {
+    "test": "gulp test",
+    "docs": "./node_modules/.bin/jsdoc -c jsdoc.conf.json"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/addthis/jquery-addthis.git"
@@ -34,6 +38,10 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "jsdoc": "^3.4.2"
+  },
   "peerDependencies": {
     "jquery": ">=1"
   },
