@@ -1,0 +1,43 @@
+{
+  "name": "jquery-addthis",
+  "version": "0.0.1",
+  "description": "A jQuery plugin for adding AddThis tools onto dynamically generate pages. Requires a free AddThis account.",
+  "main": "dist/jquery-addthis.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/addthis/jquery-addthis.git"
+  },
+  "bugs": {
+    "email": "help@addthis.com"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "AddThis",
+    "share buttons",
+    "sharing buttons",
+    "follow buttons",
+    "recent posts",
+    "recommended content",
+    "social"
+  ],
+  "homepage": "https://addthis.com",
+  "author": {
+    "name": "AddThis",
+    "email": "help@addthis.com",
+    "url": "http://addthis.com"
+  },
+  "contributors": [
+    {
+      "name": "Julka Grodel",
+      "email": "git@jgrodel.com"
+    }
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "jquery": ">=1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
