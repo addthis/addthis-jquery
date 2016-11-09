@@ -6,6 +6,7 @@ var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var saveLicense = require('uglify-save-license');
 var fs = require('fs');
+var Server = require('karma').Server;
 
 var path = {
   distribution: {
@@ -75,6 +76,14 @@ gulp.task('jslint', function() {
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(jshint.reporter('fail'));
+});
+
+
+gulp.task('unit-test', function(done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });
 
 gulp.task('watch', ['build'], function() {
