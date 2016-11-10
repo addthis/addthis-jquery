@@ -6,7 +6,9 @@
   "scripts": {
     "test": "gulp test",
     "build": "gulp build",
-    "docs": "./node_modules/.bin/jsdoc -c jsdoc.conf.json"
+    "docs": "./node_modules/.bin/jsdoc -c jsdoc.conf.json",
+    "all": "npm run build && npm run test && npm run docs",
+    "clean": "rm -Rf docs/ test_reports/ dist/"
   },
   "repository": {
     "type": "git",
