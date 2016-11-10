@@ -1,5 +1,3 @@
-/* globals describe, inject, beforeEach, afterEach, expect, it, spyOn */
-
 'use strict';
 
 describe('with no explicit configuration', function() {
