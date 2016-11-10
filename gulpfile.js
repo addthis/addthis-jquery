@@ -156,5 +156,5 @@ gulp.task('e2e-test', ['e2e-test-runner'], function () {
 gulp.task('test', ['unit-test', 'e2e-test']);
 
 gulp.task('watch', ['build'], function() {
-    gulp.watch(path.source, ['test']);
+    gulp.watch(path.source, ['build']);
 });
