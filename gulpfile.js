@@ -1,4 +1,6 @@
 var gulp = require('gulp');
+
+// build
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
@@ -6,7 +8,14 @@ var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var saveLicense = require('uglify-save-license');
 var fs = require('fs');
+
+// unit testing
 var karmaServer = require('karma').Server;
+
+// e2e testing
+var seleniumServer = require('selenium-standalone');
+var expressServer = require('gulp-express');
+var mocha = require('gulp-mocha');
 
 var path = {
   distribution: {
@@ -85,6 +94,60 @@ gulp.task('unit-test', function(done) {
   }, done).start();
 });
 
+gulp.task('start-selenium-server', function (done) {
+  var config = {
+    baseURL: 'https://selenium-release.storage.googleapis.com',
+    drivers: {
+      chrome: {},
+      firefox: {}
+    },
+    logger: console.log
+  };
+
+  var callback = function(err) {
+    if (err) {
+      return done(err);
+    }
+
+    seleniumServer.start(function (err, child) {
+      if (err) {
+        return done(err);
+      }
+
+      seleniumServer.child = child;
+      done();
+    });
+  }
+
+  seleniumServer.install(config, callback);
+});
+
+gulp.task('stop-selenium-server', function () {
+  seleniumServer.child.kill();
+})
+
+gulp.task('start-express-server', function () {
+  expressServer.run(['server.js']);
+});
+
+gulp.task('stop-express-server', function () {
+  expressServer.stop();
+});
+
+gulp.task('e2e-test-runner', ['start-express-server', 'start-selenium-server'], function (done) {
+  return gulp.src('test/e2e/**/*.js', {read: false})
+    .pipe(mocha());
+});
+
+gulp.task('e2e-test', ['e2e-test-runner'], function () {
+  return gulp.start(
+    'stop-express-server',
+    'stop-selenium-server'
+  );
+});
+
+gulp.task('test', ['unit-test', 'e2e-test']);
+
 gulp.task('watch', ['build'], function() {
-  gulp.watch(path.source);
+  gulp.watch(path.source, ['test']);
 });
