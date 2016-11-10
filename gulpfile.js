@@ -15,7 +15,6 @@ var karmaServer = require('karma').Server;
 // e2e testing
 var seleniumServer = require('selenium-standalone');
 var expressServer = require('gulp-express');
-var mocha = require('gulp-mocha');
 
 var path = {
   distribution: {
@@ -135,8 +134,16 @@ gulp.task('stop-express-server', function () {
 });
 
 gulp.task('e2e-test-runner', ['start-express-server', 'start-selenium-server'], function (done) {
+  var mocha = require('gulp-mocha');
+  var config = {
+    reporter: 'mocha-junit-reporter',
+    reporterOptions: {
+      mochaFile: './test_reports/e2e/bytest_junit/junit.xml'
+    }
+  };
+
   return gulp.src('test/e2e/**/*.js', {read: false})
-    .pipe(mocha());
+    .pipe(mocha(config));
 });
 
 gulp.task('e2e-test', ['e2e-test-runner'], function () {
