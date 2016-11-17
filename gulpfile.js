@@ -25,20 +25,6 @@ var path = {
     source: 'src/**/*.js'
 };
 
-process.on('uncaughtException', function(err) {
-    console.log(err);
-
-    if (expressServer) {
-        expressServer.stop();
-    }
-
-    if (seleniumServer) {
-        seleniumServer.child.kill();
-    }
-
-    process.kill();
-});
-
 gulp.task('make-folders', function () {
     var folders = [path.distribution.folder];
     folders.forEach(function(folder) {
