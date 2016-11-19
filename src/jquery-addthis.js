@@ -70,7 +70,7 @@
      * @param {function} callback The function to execute once addthis_widget.js
      *     has loaded and AddThis tools are ready to use. No paramaters are
      *     passed to it.
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
       **/
     plugin.load = function(callback) {
         if(window.addthis) {
@@ -94,7 +94,7 @@
             }
         }
 
-        return this;
+        return $;
     };
     plugin.load._intervalId = false;
     plugin.load._callbacks = [];
@@ -111,7 +111,7 @@
      * refresh hasn't been called in 500ms, `addthis.layers.refresh` is
      * executed. FYI: AddThis SmartLayers API will ignore calls to
      * `addthis.layers.refresh` if it's been called already within 500ms.
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.layers_refresh = function() {
         plugin.layers_refresh._lastTs = (new Date()).getTime();
@@ -129,7 +129,7 @@
             typeof window.addthis.layers === 'undefined' ||
             typeof window.addthis.layers.refresh === 'undefined'
         ) {
-            return;
+            return $;
         }
 
         /**
@@ -158,7 +158,7 @@
 
         plugin.layers_refresh._intervalId = window.setInterval(checkAndRun, 100);
 
-        return this;
+        return $;
     };
     plugin.layers_refresh._lastTs = 0;
     plugin.layers_refresh.pending = 0;
@@ -170,7 +170,7 @@
      * @param {object} options AddThis configuration object. See
      *   <a href="https://www.addthis.com/academy/the-addthis_config-variable/" target="_blank">
      *   the addthis_config variable documentation</a> for options.
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.config = function(options) {
         var opts = $.extend({}, plugin.config.defaults, options);
@@ -185,7 +185,7 @@
 
         plugin.config.current = opts;
         plugin.layers_refresh();
-        return this;
+        return $;
     };
     /**
      * @default
@@ -201,7 +201,7 @@
      * @param {object} options AddThis sharing options. See
      *   <a href="https://www.addthis.com/academy/the-addthis_share-variable/"" target="_blank">
      *   the addthis_share variable documentation</a> for options.
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.share = function(options) {
         var opts = $.extend({}, plugin.share.defaults, options);
@@ -223,7 +223,7 @@
 
         plugin.share.current = opts;
         plugin.layers_refresh();
-        return this;
+        return $;
     };
     /**
      * @default
@@ -247,13 +247,13 @@
      *
      * @param {string} url the url to be used when clicking on a share button
      *   that doesn't speicfy its share url
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.shareUrl = function(url) {
         plugin.share.defaults.url = url;
         plugin.share.current.url = url;
         plugin.layers_refresh();
-        return this;
+        return $;
     };
 
     /**
@@ -276,13 +276,13 @@
      *
      * @param {string} title the title to be used when clicking on a share button
      *   that doesn't speicfy its share title
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.shareTitle = function(title) {
         plugin.share.defaults.title = title;
         plugin.share.current.title = title;
         plugin.layers_refresh();
-        return this;
+        return $;
     };
 
     /**
@@ -307,13 +307,13 @@
      *
      * @param {string} description the description to be used when clicking on a
      *   share button that doesn't speicfy its share description
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.shareDescription = function(description) {
         plugin.share.defaults.description = description;
         plugin.share.current.description = description;
         plugin.layers_refresh();
-        return this;
+        return $;
     };
 
     /**
@@ -336,13 +336,13 @@
      *
      * @param {string} media the image url to be used when clicking on a share
      *   button that doesn't speicfy its share image url
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.shareMedia = function(media) {
         plugin.share.defaults.media = media;
         plugin.share.current.media = media;
         plugin.layers_refresh();
-        return this;
+        return $;
     };
 
     var twitterViaHelper = function(handle, shareConfig) {
@@ -373,7 +373,7 @@
      *
      * @param {string|false} the twitter handle in a string or false to remove
      * twitter handle from config
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.twitterVia = function(handle) {
         // add/delete for current addthis_share value
@@ -383,7 +383,7 @@
         twitterViaHelper(handle, plugin.share.defaults);
 
         plugin.layers_refresh();
-        return this;
+        return $;
     };
 
     /**
@@ -417,7 +417,7 @@
      *
      * @param {string} urlShorteningService The URL shortening service to enable
      * @param {string} socialService The social service to enable the URL shortening on
-     * @return {jQuery} chainable jQuery class
+     * @return {jQuery} the jQuery function
      **/
     plugin.urlShortening = function(urlShorteningService, socialService) {
         // add url shortener to current values for addthis_share
@@ -427,7 +427,7 @@
         urlShorteningHelper(urlShorteningService, socialService, plugin.share.defaults);
 
         plugin.layers_refresh();
-        return this;
+        return $;
     };
 
 })(jQuery, window);
