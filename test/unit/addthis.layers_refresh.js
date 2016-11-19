@@ -32,6 +32,11 @@ describe('$.addthis.layers_refresh', function() {
         expect($.addthis.layers_refresh).toBeDefined();
     });
 
+    it('should return the jQuery function', function() {
+        var jQueryCopy = $.addthis.layers_refresh();
+        expect(jQueryCopy).toEqual($);
+    });
+
     it('should do nothing if window.addthis is defined but window.addthis.layers is not defined', function() {
         expect($.addthis.layers_refresh._intervalId).toBe(false);
         window.addthis = {};

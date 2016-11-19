@@ -36,7 +36,11 @@ describe('$.addthis.load', function() {
     it('should be defined', function() {
         expect($.addthis.load).toBeDefined();
     });
-//    it('should return a jQuery object', function() {});
+
+    it('should return the jQuery function', function() {
+        var jQueryCopy = $.addthis.load();
+        expect(jQueryCopy).toEqual($);
+    });
 
     it('does not immidiately call callback if window.addthis is not set', function() {
         var myCallbacksObject = { callback: function() {} };

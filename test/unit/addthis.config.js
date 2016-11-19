@@ -37,7 +37,10 @@ describe('$.addthis.config', function() {
         expect($.addthis.config).toBeDefined();
     });
 
-//    it('should return a jQuery object', function() {});
+    it('should return the jQuery function', function() {
+        var jQueryCopy = $.addthis.config();
+        expect(jQueryCopy).toEqual($);
+    });
 
     it('should call $.addthis.layers_refresh', function() {
         spyOn($.addthis, 'layers_refresh').and.callThrough();
