@@ -8,13 +8,7 @@ var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var saveLicense = require('uglify-save-license');
 var fs = require('fs');
-
-// unit testing
 var karmaServer = require('karma').Server;
-
-// e2e testing
-var seleniumServer = require('selenium-standalone');
-var expressServer = require('gulp-express');
 
 var path = {
     distribution: {
@@ -88,70 +82,18 @@ gulp.task('jslint', function() {
 
 gulp.task('unit-test', function(done) {
     new karmaServer({
-        configFile: __dirname + '/karma.conf.js',
+        configFile: __dirname + '/karma.unit.conf.js',
         singleRun: true
     }, done).start();
 });
 
-gulp.task('start-selenium-server', function (done) {
-    var config = {
-        baseURL: 'https://selenium-release.storage.googleapis.com',
-        drivers: {
-            chrome: {},
-            firefox: {}
-        },
-        logger: console.log
-    };
-
-    var callback = function(err) {
-        if (err) {
-            return done(err);
-        }
-
-        seleniumServer.start(function (err, child) {
-            if (err) {
-                return done(err);
-            }
-
-            seleniumServer.child = child;
-            done();
-        });
-    }
-
-    seleniumServer.install(config, callback);
+gulp.task('e2e-test', function(done) {
+    new karmaServer({
+        configFile: __dirname + '/karma.e2e.conf.js',
+        singleRun: true
+    }, done).start();
 });
 
-gulp.task('stop-selenium-server', function () {
-    seleniumServer.child.kill();
-})
-
-gulp.task('start-express-server', function () {
-    expressServer.run(['server.js']);
-});
-
-gulp.task('stop-express-server', function () {
-    expressServer.stop();
-});
-
-gulp.task('e2e-test-runner', ['start-express-server', 'start-selenium-server'], function (done) {
-    var mocha = require('gulp-mocha');
-    var config = {
-        reporter: 'mocha-junit-reporter',
-        reporterOptions: {
-            mochaFile: './test_reports/e2e/bytest_junit/junit.xml'
-        }
-    };
-
-    return gulp.src('test/e2e/**/*.js', {read: false})
-        .pipe(mocha(config));
-});
-
-gulp.task('e2e-test', ['e2e-test-runner'], function () {
-    return gulp.start(
-        'stop-express-server',
-        'stop-selenium-server'
-    );
-});
 
 gulp.task('test', function() {
     return gulp.start(

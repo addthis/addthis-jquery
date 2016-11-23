@@ -1,46 +1,22 @@
-var assert = require('assert');
-var webdriverio = require('webdriverio');
-var browserNames = ['chrome'];
+//var webdriverio = require('webdriverio');
 
-browserNames.forEach(function(browserName) {
-    var options = {
-        //logLevel: 'command',
-        baseUrl: 'http://localhost:3003/test/fixtures',
-        desiredCapabilities: {
-            browserName: browserName
-        }
-    };
+describe('with no explicit configuration', function() {
+    beforeEach(function(){
+        fixture.setBase('test/fixtures')
+        fixture.load('1no.explicit.configuration.html');
+    });
 
-    describe('with no explicit configuration', function() {
-        var browser;
-        this.timeout(5000);
+    it('addthis_plugin_info should have the expected format & values', function() {
+        expect(typeof window.addthis_plugin_info).toBe('object');
+        expect(window.addthis_plugin_info.info_status).toBe('enabled');
+        expect(window.addthis_plugin_info.cms_name).toBe('jQuery');
+        expect(window.addthis_plugin_info.plugin_name).toBe('jquery-angular');
+        expect(window.addthis_plugin_info.plugin_mode).toBe('AddThis');
+        expect(typeof window.addthis_plugin_info.cms_version).toBe('string');
+        expect(typeof window.addthis_plugin_info.plugin_version).toBe('string');
+    });
 
-        before(function() {
-            browser = webdriverio
-                .remote(options)
-                .init()
-                .url('/1no.explicit.configuration.html');
-        });
-
-        it('addthis_plugin_info should have the expected format & values', function(done) {
-          browser.execute(function() {
-              return window.addthis_plugin_info;
-          }).then(function(result) {
-              assert.equal(typeof result.value, 'object');
-              assert.equal(result.value.info_status, 'enabled');
-              assert.equal(result.value.cms_name, 'jQuery');
-              assert.equal(result.value.plugin_name, 'jquery-angular');
-              assert.equal(result.value.plugin_mode, 'AddThis');
-              assert.equal(typeof result.value.cms_version, 'string');
-              assert.equal(typeof result.value.plugin_version, 'string');
-              done();
-          });
-        });
-
-        after(function(done) {
-            browser.end().then(function() {
-                done();
-            });
-        });
+    afterEach(function() {
+        fixture.cleanup()
     });
 });
