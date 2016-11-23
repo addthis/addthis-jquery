@@ -1,12 +1,5 @@
 {
-    "extends"       : "../../.jshintrc",
+    "extends"       : "../.jshintrc",
     "globals"       : {
-        "afterEach": true,
-        "beforeEach": true,
-        "describe": true,
-        "expect": true,
-        "inject": true,
-        "it": true,
-        "spyOn": true
     }
 }

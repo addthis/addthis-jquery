@@ -1,10 +1,6 @@
 {
-    "extends"       : "../../.jshintrc",
+    "extends"       : "../.jshintrc",
     "globals"       : {
-        "after": true,
-        "before": true,
-        "describe": true,
-        "fixture": true,
-        "it": true
+        "fixture": true
     }
 }

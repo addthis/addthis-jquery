@@ -2,7 +2,7 @@
 
 describe('with no explicit configuration', function() {
     beforeEach(function(){
-        fixture.setBase('test/fixtures')
+        fixture.setBase('test/fixtures');
         fixture.load('1no.explicit.configuration.html');
     });
 
@@ -17,6 +17,6 @@ describe('with no explicit configuration', function() {
     });
 
     afterEach(function() {
-        fixture.cleanup()
+        fixture.cleanup();
     });
 });
