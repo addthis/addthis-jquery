@@ -52,7 +52,6 @@ module.exports = function(config) {
         useLegacyStyle: true
     },
 
-    // the default configuration
     junitReporter: {
       outputDir: './test_reports/e2e/bytest_junit'
     },

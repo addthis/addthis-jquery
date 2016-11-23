@@ -50,10 +50,10 @@ module.exports = function(config) {
       useLegacyStyle: true
     },
 
-    // the default configuration
     junitReporter: {
       outputDir: './test_reports/unit/bytest_junit'
     },
+
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
