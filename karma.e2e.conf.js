@@ -17,9 +17,14 @@ module.exports = function(config) {
     files: [
       './test/fixtures/**/*.html',
       './test/e2e/**/*.js',
-      './node_modules/jquery/dist/jquery.js',
-      './src/jquery-addthis.js',
-      'https://s7.addthis.com/js/300/addthis_widget.js'
+      {
+        pattern: './node_modules/jquery/dist/jquery.js',
+        included: false
+      },
+      {
+        pattern: './src/jquery-addthis.js',
+        included: false
+      }
     ],
 
     // list of files to exclude
@@ -30,7 +35,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'src/**/*.js'             : 'coverage',
-      'test/fixtures/**/*.html' : 'html2js'
+      './test/fixtures/**/*.html' : 'html2js'
     },
 
     coverageReporter: {
