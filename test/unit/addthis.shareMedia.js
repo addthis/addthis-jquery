@@ -49,7 +49,7 @@ describe('$.addthis.shareMedia', function() {
         expect($.addthis.layers_refresh.calls.count()).toEqual(1);
     });
 
-    it('should set window.addthis_share to a copy of what we passed', function() {
+    it('should set window.addthis_share.media to what we passed', function() {
         $.addthis.shareMedia(media);
         expect(window.addthis_share.media).toBe(media);
         expect($.addthis.share.defaults.media).toBe(media);

@@ -2,9 +2,6 @@
 'use strict';
 
 describe('$.addthis.twitterVia', function() {
-    var testConfigs1 = {
-        'foo': 'bar'
-    };
     var twitterHandle = 'addthis';
 
     afterEach(function() {

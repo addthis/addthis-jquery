@@ -28,8 +28,9 @@ describe('by default window.addthis_plugin_info', function() {
         delete window.addthis_config;
     });
 
-    it('should be defined', function() {
+    it('should be defined as an object', function() {
         expect(window.addthis_plugin_info).toBeDefined();
+        expect(typeof window.addthis_plugin_info).toBe('object');
     });
 
     it('should have property info_status equal "enabled"', function() {
@@ -40,16 +41,18 @@ describe('by default window.addthis_plugin_info', function() {
         expect(window.addthis_plugin_info.cms_name).toBe('jQuery');
     });
 
-    it('should have property cms_version defined', function() {
+    it('should have property cms_version defined and a string', function() {
         expect(window.addthis_plugin_info.cms_version).toBeDefined();
+        expect(typeof window.addthis_plugin_info.cms_version).toBe('string');
     });
 
     it('should have property plugin_name equal "jquery-angular"', function() {
         expect(window.addthis_plugin_info.plugin_name).toBe('jquery-angular');
     });
 
-    it('should have property plugin_version defined', function() {
+    it('should have property plugin_version defined and a string', function() {
         expect(window.addthis_plugin_info.plugin_version).toBeDefined();
+        expect(typeof window.addthis_plugin_info.plugin_version).toBe('string');
     });
 
     it('should have property plugin_mode equal "AddThis"', function() {

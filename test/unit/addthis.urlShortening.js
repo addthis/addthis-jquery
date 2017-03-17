@@ -2,9 +2,6 @@
 'use strict';
 
 describe('$.addthis.urlShortening', function() {
-    var testConfigs1 = {
-        'foo': 'bar'
-    };
     var urlShorteningService = 'bitly';
     var socialService = 'twitter';
 

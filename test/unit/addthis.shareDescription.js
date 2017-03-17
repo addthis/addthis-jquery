@@ -49,7 +49,7 @@ describe('$.addthis.shareDescription', function() {
         expect($.addthis.layers_refresh.calls.count()).toEqual(1);
     });
 
-    it('should set window.addthis_share to a copy of what we passed', function() {
+    it('should set window.addthis_share.description to what we passed', function() {
         $.addthis.shareDescription(description);
         expect(window.addthis_share.description).toBe(description);
         expect($.addthis.share.defaults.description).toBe(description);
