@@ -21,45 +21,6 @@
         plugin_mode    : 'AddThis'
     };
 
-    if (typeof window.addthis_config === 'object') {
-        // if the user didn't set any general configuration options through
-        // the module and window.addthis_config looks right on page and has
-        // something in it use it
-        plugin.config.current = $.extend({}, window.addthis_config);
-    }
-
-    if (typeof window.addthis_share === 'object') {
-        // if the user didn't set any share configuration options through
-        // the module and window.addthis_config looks right on page and has
-        // something in it use it
-        plugin.share.current = $.extend({}, window.addthis_share);
-
-        if (typeof window.addthis === 'undefined') {
-            /**
-             * Only hold onto url, title, description, media values if
-             * addthis_widget has not yet set up the global addthis
-             * variable. If it has, then those properties may have been set
-             * by it addthis_widget.js and not on page. Let's only hold on
-             * to those properties if we know they were set on page
-             **/
-            if (plugin.share.current.url) {
-                plugin.share.defaults.url = plugin.share.current.url;
-            }
-
-            if (plugin.share.current.title) {
-                plugin.share.defaults.title = plugin.share.current.title;
-            }
-
-            if (plugin.share.current.description) {
-                plugin.share.defaults.description = plugin.share.current.description;
-            }
-
-            if (plugin.share.current.media) {
-                plugin.share.defaults.media = plugin.share.current.media;
-            }
-        }
-    }
-
     /**
      * @method "jQuery.addthis.load"
      * @public
@@ -430,6 +391,48 @@
         return $;
     };
 
+    if (typeof window.addthis_config === 'object') {
+        // if the user didn't set any general configuration options through
+        // the module and window.addthis_config looks right on page and has
+        // something in it use it
+        plugin.config.current = $.extend({}, window.addthis_config);
+    } else {
+        window.addthis_config = $.extend({}, plugin.config.current);
+    }
+
+    if (typeof window.addthis_share === 'object') {
+        // if the user didn't set any share configuration options through
+        // the module and window.addthis_config looks right on page and has
+        // something in it use it
+        plugin.share.current = $.extend({}, window.addthis_share);
+
+        if (typeof window.addthis === 'undefined') {
+            /**
+             * Only hold onto url, title, description, media values if
+             * addthis_widget has not yet set up the global addthis
+             * variable. If it has, then those properties may have been set
+             * by it addthis_widget.js and not on page. Let's only hold on
+             * to those properties if we know they were set on page
+             **/
+            if (plugin.share.current.url) {
+                plugin.share.defaults.url = plugin.share.current.url;
+            }
+
+            if (plugin.share.current.title) {
+                plugin.share.defaults.title = plugin.share.current.title;
+            }
+
+            if (plugin.share.current.description) {
+                plugin.share.defaults.description = plugin.share.current.description;
+            }
+
+            if (plugin.share.current.media) {
+                plugin.share.defaults.media = plugin.share.current.media;
+            }
+        }
+    } else {
+        window.addthis_share = $.extend({}, plugin.share.current);
+    }
 })(jQuery, window);
 
 /**
