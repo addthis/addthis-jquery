@@ -4,7 +4,7 @@
 * @version 0.0.1
 * @requires jquery
 */
-(function($, window) {
+;(function($, window, document, undefined) {
     var pluginName = 'addthis';
 
     var plugin = $[pluginName] = {};
@@ -530,7 +530,8 @@
     } else {
         window.addthis_share = $.extend({}, plugin.share.current);
     }
-})(jQuery, window);
+
+})(jQuery, window, document);
 
 /**
 * The jQuery plugin namespace.
