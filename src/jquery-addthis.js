@@ -391,6 +391,103 @@
         return $;
     };
 
+    var wrapDomManipulationFunction = function(oldFunction) {
+        var newFunction = function() {
+            var result = oldFunction.apply(this, arguments);
+            plugin.layers_refresh();
+            return result;
+        }
+
+        return newFunction;
+    };
+
+    var definedAddThisFunctionsOnElements = function(element) {
+        element.appendTo = wrapDomManipulationFunction(element.appendTo);
+        element.insertAfter = wrapDomManipulationFunction(element.insertAfter);
+        element.insertBefore = wrapDomManipulationFunction(element.insertBefore);
+        element.prependTo = wrapDomManipulationFunction(element.prependTo);
+        element.replaceAll = wrapDomManipulationFunction(element.replaceAll);
+
+        element.shareUrl = elementChangeShareAttrForBoostTool('url');
+        element.shareTitle = elementChangeShareAttrForBoostTool('title');
+        element.shareDescription = elementChangeShareAttrForBoostTool('description');
+        element.shareMedia = elementChangeShareAttrForBoostTool('media');
+
+        return element;
+    };
+
+    var elementChangeShareAttrForBoostTool = function(attr) {
+        return function (newValue) {
+            var oldToolElement = $($(this).children(":first")[0]);
+            var options = { tool: oldToolElement.class };
+
+            if (typeof oldToolElement.attr('class') !== 'undefined') {
+                options.tool = oldToolElement.attr('class');
+            }
+            if (typeof oldToolElement.attr('data-title') !== 'undefined') {
+                options.title = oldToolElement.attr('data-title');
+            }
+            if (typeof oldToolElement.attr('data-url') !== 'undefined') {
+                options.url = oldToolElement.attr('data-url');
+            }
+            if (typeof oldToolElement.attr('data-description') !== 'undefined') {
+                options.description = oldToolElement.attr('data-description');
+            }
+            if (typeof oldToolElement.attr('data-media') !== 'undefined') {
+                options.media = oldToolElement.attr('data-media');
+            }
+
+            var oldValue = oldToolElement.attr('data-' + attr);
+            if (oldValue !== newValue) {
+                if (typeof newValue === 'undefined') {
+                    delete options[attr];
+                } else {
+                    options[attr] = newValue;
+                }
+            }
+
+            var newToolElement = createNewElementForBoostTools(options);
+            $(this).empty().append(newToolElement);
+            plugin.layers_refresh();
+            return this;
+        };
+    };
+
+    var createNewElementForBoostTools = function(options) {
+        var newElements = $('<div></div>');
+        if (typeof options.tool === 'string') {
+            newElements.addClass(options.tool);
+        }
+        if (typeof options.title === 'string') {
+            newElements.attr('data-title', options.title);
+        }
+        if (typeof options.url === 'string') {
+            newElements.attr('data-url', options.url);
+        }
+        if (typeof options.media === 'string') {
+            newElements.attr('data-media', options.media);
+        }
+        if (typeof options.description === 'string') {
+            newElements.attr('data-description', options.description);
+        }
+
+        return newElements;
+    };
+
+    var parentClass = 'addthis-tool-parent-class';
+    plugin.tool = function(options) {
+        var toolElement = createNewElementForBoostTools(options);
+
+        var parentElement = $('<div></div>')
+            .addClass(parentClass)
+            .append(toolElement);
+
+        definedAddThisFunctionsOnElements(parentElement);
+
+        return parentElement;
+    };
+
+
     if (typeof window.addthis_config === 'object') {
         // if the user didn't set any general configuration options through
         // the module and window.addthis_config looks right on page and has
