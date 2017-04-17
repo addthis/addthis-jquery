@@ -1,6 +1,6 @@
 //var webdriverio = require('webdriverio');
 
-describe('$.addthis.shareTitle', function() {
+describe('$.addthis().shareTitle', function() {
     var $;
 
     beforeEach(function(done) {
@@ -35,14 +35,14 @@ describe('$.addthis.shareTitle', function() {
 
     it('should set window.addthis_share.title to what we passed', function() {
         expect(window.addthis_share.title).toBeUndefined();
-        $.addthis.shareTitle(title1);
+        $.addthis().shareTitle(title1);
         expect(window.addthis_share.title).toBe(title1);
-        expect($.addthis.share.defaults.title).toBe(title1);
-        expect($.addthis.share.current.title).toBe(title1);
-        $.addthis.shareTitle(title2);
+        expect($.addthis().defaults.share.title).toBe(title1);
+        expect($.addthis().current.share.title).toBe(title1);
+        $.addthis().shareTitle(title2);
         expect(window.addthis_share.title).toBe(title2);
-        expect($.addthis.share.defaults.title).toBe(title2);
-        expect($.addthis.share.current.title).toBe(title2);
+        expect($.addthis().defaults.share.title).toBe(title2);
+        expect($.addthis().current.share.title).toBe(title2);
     });
 
     afterEach(function() {

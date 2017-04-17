@@ -1,6 +1,6 @@
 //var webdriverio = require('webdriverio');
 
-describe('$.addthis.shareDescription', function() {
+describe('$.addthis().shareDescription', function() {
     var $;
 
     beforeEach(function(done) {
@@ -35,14 +35,14 @@ describe('$.addthis.shareDescription', function() {
 
     it('should set window.addthis_share.description to what we passed', function() {
         expect(window.addthis_share.description).toBeUndefined();
-        $.addthis.shareDescription(description1);
+        $.addthis().shareDescription(description1);
         expect(window.addthis_share.description).toBe(description1);
-        expect($.addthis.share.defaults.description).toBe(description1);
-        expect($.addthis.share.current.description).toBe(description1);
-        $.addthis.shareDescription(description2);
+        expect($.addthis().defaults.share.description).toBe(description1);
+        expect($.addthis().current.share.description).toBe(description1);
+        $.addthis().shareDescription(description2);
         expect(window.addthis_share.description).toBe(description2);
-        expect($.addthis.share.defaults.description).toBe(description2);
-        expect($.addthis.share.current.description).toBe(description2);
+        expect($.addthis().defaults.share.description).toBe(description2);
+        expect($.addthis().current.share.description).toBe(description2);
     });
 
     afterEach(function() {

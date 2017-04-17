@@ -1,6 +1,6 @@
 //var webdriverio = require('webdriverio');
 
-describe('$.addthis.config', function() {
+describe('$.addthis().config', function() {
     var $;
 
     beforeEach(function(done) {
@@ -33,37 +33,37 @@ describe('$.addthis.config', function() {
     it('does not immidiately call callback if window.addthis is not set', function() {
         var myCallbacksObject = { callback: function() {} };
         spyOn(myCallbacksObject, 'callback').and.callThrough();
-        $.addthis.load(myCallbacksObject.callback);
+        $.addthis().load(myCallbacksObject.callback);
         expect(myCallbacksObject.callback.calls.count()).toEqual(0);
     });
 
     it('sets up interval if window.addthis is not set', function() {
-        expect($.addthis.load._intervalId).toBe(false);
-        $.addthis.load(function() {});
-        expect($.addthis.load._intervalId).not.toBe(false);
+        expect($.addthis().current.load._intervalId).toBe(false);
+        $.addthis().load(function() {});
+        expect($.addthis().current.load._intervalId).not.toBe(false);
     });
 
     it('immidiately calls callback if window.addthis is set', function() {
         var myCallbacksObject = { callback: function() {} };
         spyOn(myCallbacksObject, 'callback').and.callThrough();
         window.addthis = true;
-        $.addthis.load(myCallbacksObject.callback);
+        $.addthis().load(myCallbacksObject.callback);
         expect(myCallbacksObject.callback.calls.count()).toEqual(1);
     });
 
     it('does not set up a new interval when on is already setup', function() {
-        expect($.addthis.load._intervalId).toBe(false);
-        $.addthis.load(function() {});
-        expect($.addthis.load._intervalId).not.toBe(false);
-        var firstIntervalId = $.addthis.load._intervalId;
-        $.addthis.load(function() {});
-        expect($.addthis.load._intervalId).toBe(firstIntervalId);
+        expect($.addthis().current.load._intervalId).toBe(false);
+        $.addthis().load(function() {});
+        expect($.addthis().current.load._intervalId).not.toBe(false);
+        var firstIntervalId = $.addthis().current.load._intervalId;
+        $.addthis().load(function() {});
+        expect($.addthis().current.load._intervalId).toBe(firstIntervalId);
     });
 
     it('calls callback after window.addthis is set up later', function(done) {
         var myCallbacksObject = { callback: function() {} };
         spyOn(myCallbacksObject, 'callback').and.callThrough();
-        $.addthis.load(myCallbacksObject.callback);
+        $.addthis().load(myCallbacksObject.callback);
         expect(myCallbacksObject.callback.calls.count()).toEqual(0);
         window.setTimeout(function() {
             expect(myCallbacksObject.callback.calls.count()).toEqual(0);

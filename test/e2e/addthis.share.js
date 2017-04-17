@@ -1,6 +1,6 @@
 //var webdriverio = require('webdriverio');
 
-describe('$.addthis.share', function() {
+describe('$.addthis().share', function() {
     var $;
 
     beforeEach(function(done) {
@@ -50,14 +50,14 @@ describe('$.addthis.share', function() {
     });
 
     it('function should not set window.addthis_share to be the the same object as the input', function() {
-        $.addthis.share(newShareConfig1);
+        $.addthis().share(newShareConfig1);
         expect(newShareConfig1).not.toBe(window.addthis_share);
     });
 
     it('function should set window.addthis_share values', function() {
-        $.addthis.share({foo: 'bar'});
+        $.addthis().share({foo: 'bar'});
         expect(window.addthis_share.foo).toBe('bar');
-        $.addthis.share(newShareConfig1);
+        $.addthis().share(newShareConfig1);
         expect(window.addthis_share.foo).toBe('bar');
         expect(window.addthis_share.title).toBe(newShareConfig1.title);
         expect(window.addthis_share.url).toBe(newShareConfig1.url);
@@ -65,34 +65,34 @@ describe('$.addthis.share', function() {
         expect(window.addthis_share.media).toBe(newShareConfig1.media);
     });
 
-    it('function should set $.addthis.share.default.title to equal inputs title', function() {
-        $.addthis.share(newShareConfig1);
-        expect($.addthis.share.defaults.title).toBe(newShareConfig1.title);
+    it('function should set $.addthis().defaults.share.title to equal inputs title', function() {
+        $.addthis().share(newShareConfig1);
+        expect($.addthis().defaults.share.title).toBe(newShareConfig1.title);
     });
 
-    it('function should set $.addthis.share.default.url to equal inputs url', function() {
-        $.addthis.share(newShareConfig1);
-        expect($.addthis.share.defaults.url).toBe(newShareConfig1.url);
+    it('function should set $.addthis().defaults.share.url to equal inputs url', function() {
+        $.addthis().share(newShareConfig1);
+        expect($.addthis().defaults.share.url).toBe(newShareConfig1.url);
     });
 
-    it('function should set $.addthis.share.default.description to equal inputs description', function() {
-        $.addthis.share(newShareConfig1);
-        expect($.addthis.share.defaults.description).toBe(newShareConfig1.description);
+    it('function should set $.addthis().defaults.share.description to equal inputs description', function() {
+        $.addthis().share(newShareConfig1);
+        expect($.addthis().defaults.share.description).toBe(newShareConfig1.description);
     });
 
-    it('function should set $.addthis.share.default.media to equal inputs media', function() {
-        $.addthis.share(newShareConfig1);
-        expect($.addthis.share.defaults.media).toBe(newShareConfig1.media);
+    it('function should set $.addthis().defaults.share.media to equal inputs media', function() {
+        $.addthis().share(newShareConfig1);
+        expect($.addthis().defaults.share.media).toBe(newShareConfig1.media);
     });
 
     it('function should reuse previous title, url, description and media in window.addthis_share when not provided', function() {
-        $.addthis.share(newShareConfig1);
+        $.addthis().share(newShareConfig1);
         expect(window.addthis_share.foo).toBe('bar');
         expect(window.addthis_share.title).toBe(newShareConfig1.title);
         expect(window.addthis_share.url).toBe(newShareConfig1.url);
         expect(window.addthis_share.description).toBe(newShareConfig1.description);
         expect(window.addthis_share.media).toBe(newShareConfig1.media);
-        $.addthis.share({foo: 'baz'});
+        $.addthis().share({foo: 'baz'});
         expect(window.addthis_share.foo).toBe('baz');
         expect(window.addthis_share.title).toBe(newShareConfig1.title);
         expect(window.addthis_share.url).toBe(newShareConfig1.url);
@@ -101,13 +101,13 @@ describe('$.addthis.share', function() {
     });
 
     it('function should change title, url, description and media in window.addthis_share when provided', function() {
-        $.addthis.share(newShareConfig1);
+        $.addthis().share(newShareConfig1);
         expect(window.addthis_share.foo).toBe('bar');
         expect(window.addthis_share.title).toBe(newShareConfig1.title);
         expect(window.addthis_share.url).toBe(newShareConfig1.url);
         expect(window.addthis_share.description).toBe(newShareConfig1.description);
         expect(window.addthis_share.media).toBe(newShareConfig1.media);
-        $.addthis.share(newShareConfig2);
+        $.addthis().share(newShareConfig2);
         expect(window.addthis_share.foo).toBeUndefined();
         expect(window.addthis_share.title).toBe(newShareConfig2.title);
         expect(window.addthis_share.url).toBe(newShareConfig2.url);
@@ -115,32 +115,32 @@ describe('$.addthis.share', function() {
         expect(window.addthis_share.media).toBe(newShareConfig2.media);
     });
 
-    it('function should change existing $.addthis.share.default.title to equal inputs title', function() {
-        $.addthis.share(newShareConfig1);
-        expect($.addthis.share.defaults.title).toBe(newShareConfig1.title);
-        $.addthis.share(newShareConfig2);
-        expect($.addthis.share.defaults.title).toBe(newShareConfig2.title);
+    it('function should change existing $.addthis().share.default.title to equal inputs title', function() {
+        $.addthis().share(newShareConfig1);
+        expect($.addthis().defaults.share.title).toBe(newShareConfig1.title);
+        $.addthis().share(newShareConfig2);
+        expect($.addthis().defaults.share.title).toBe(newShareConfig2.title);
     });
 
-    it('function should change existing $.addthis.share.default.url to equal inputs url', function() {
-        $.addthis.share(newShareConfig1);
-        expect($.addthis.share.defaults.url).toBe(newShareConfig1.url);
-        $.addthis.share(newShareConfig2);
-        expect($.addthis.share.defaults.url).toBe(newShareConfig2.url);
+    it('function should change existing $.addthis().share.default.url to equal inputs url', function() {
+        $.addthis().share(newShareConfig1);
+        expect($.addthis().defaults.share.url).toBe(newShareConfig1.url);
+        $.addthis().share(newShareConfig2);
+        expect($.addthis().defaults.share.url).toBe(newShareConfig2.url);
     });
 
-    it('function should change existing $.addthis.share.default.description to equal inputs description', function() {
-        $.addthis.share(newShareConfig1);
-        expect($.addthis.share.defaults.description).toBe(newShareConfig1.description);
-        $.addthis.share(newShareConfig2);
-        expect($.addthis.share.defaults.description).toBe(newShareConfig2.description);
+    it('function should change existing $.addthis().share.default.description to equal inputs description', function() {
+        $.addthis().share(newShareConfig1);
+        expect($.addthis().defaults.share.description).toBe(newShareConfig1.description);
+        $.addthis().share(newShareConfig2);
+        expect($.addthis().defaults.share.description).toBe(newShareConfig2.description);
     });
 
-    it('function should change existing $.addthis.share.default.media to equal inputs media', function() {
-        $.addthis.share(newShareConfig1);
-        expect($.addthis.share.defaults.media).toBe(newShareConfig1.media);
-        $.addthis.share(newShareConfig2);
-        expect($.addthis.share.defaults.media).toBe(newShareConfig2.media);
+    it('function should change existing $.addthis().share.default.media to equal inputs media', function() {
+        $.addthis().share(newShareConfig1);
+        expect($.addthis().defaults.share.media).toBe(newShareConfig1.media);
+        $.addthis().share(newShareConfig2);
+        expect($.addthis().defaults.share.media).toBe(newShareConfig2.media);
     });
 
     afterEach(function() {

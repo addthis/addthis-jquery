@@ -1,6 +1,6 @@
 //var webdriverio = require('webdriverio');
 
-describe('$.addthis.shareMedia', function() {
+describe('$.addthis().shareMedia', function() {
     var $;
 
     beforeEach(function(done) {
@@ -35,14 +35,14 @@ describe('$.addthis.shareMedia', function() {
 
     it('should set window.addthis_share.media to what we passed', function() {
         expect(window.addthis_share.media).toBeUndefined();
-        $.addthis.shareMedia(media1);
+        $.addthis().shareMedia(media1);
         expect(window.addthis_share.media).toBe(media1);
-        expect($.addthis.share.defaults.media).toBe(media1);
-        expect($.addthis.share.current.media).toBe(media1);
-        $.addthis.shareMedia(media2);
+        expect($.addthis().defaults.share.media).toBe(media1);
+        expect($.addthis().current.share.media).toBe(media1);
+        $.addthis().shareMedia(media2);
         expect(window.addthis_share.media).toBe(media2);
-        expect($.addthis.share.defaults.media).toBe(media2);
-        expect($.addthis.share.current.media).toBe(media2);
+        expect($.addthis().defaults.share.media).toBe(media2);
+        expect($.addthis().current.share.media).toBe(media2);
     });
 
     afterEach(function() {

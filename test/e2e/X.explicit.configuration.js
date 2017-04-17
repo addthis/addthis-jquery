@@ -103,20 +103,20 @@ describe('with explicit configuration', function() {
                 expect(window.addthis_share.media).toBe(media);
             });
 
-            it('should have populated share title value into $.addthis.share.defaults.title', function() {
-                expect($.addthis.share.defaults.title).toBe(title);
+            it('should have populated share title value into $.addthis().defaults.share.title', function() {
+                expect($.addthis().defaults.share.title).toBe(title);
             });
 
-            it('should have populated share title value into $.addthis.share.defaults.url', function() {
-                expect($.addthis.share.defaults.url).toBe(url);
+            it('should have populated share title value into $.addthis().defaults.share.url', function() {
+                expect($.addthis().defaults.share.url).toBe(url);
             });
 
-            it('should have populated share title value into $.addthis.share.defaults.description', function() {
-                expect($.addthis.share.defaults.description).toBe(description);
+            it('should have populated share title value into $.addthis().defaults.share.description', function() {
+                expect($.addthis().defaults.share.description).toBe(description);
             });
 
-            it('should have populated share title value into $.addthis.share.defaults.media', function() {
-                expect($.addthis.share.defaults.media).toBe(media);
+            it('should have populated share title value into $.addthis().defaults.share.media', function() {
+                expect($.addthis().defaults.share.media).toBe(media);
             });
         });
 

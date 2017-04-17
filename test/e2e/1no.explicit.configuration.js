@@ -36,67 +36,67 @@ describe('with no explicit configuration', function() {
         });
 
         it('$.addthis should be an object', function() {
-            expect(typeof $.addthis).toBe('object');
+            expect(typeof $.addthis()).toBe('object');
         });
 
-        it('$.addthis.load should be a function', function() {
-            expect(typeof $.addthis.load).toBe('function');
+        it('$.addthis().load should be a function', function() {
+            expect(typeof $.addthis().load).toBe('function');
         });
 
-        it('$.addthis.layers_refresh should be a function', function() {
-            expect(typeof $.addthis.layers_refresh).toBe('function');
+        it('$.addthis().layers_refresh should be a function', function() {
+            expect(typeof $.addthis().layers_refresh).toBe('function');
         });
 
-        it('$.addthis.layers_refresh.pending should be 0', function() {
-            expect($.addthis.layers_refresh.pending).toBe(0);
+        it('$.addthis().current.layers_refresh.pending should be 0', function() {
+            expect($.addthis().current.layers_refresh.pending).toBe(0);
         });
 
-        it('$.addthis.config should be a function', function() {
-            expect(typeof $.addthis.config).toBe('function');
+        it('$.addthis().config should be a function', function() {
+            expect(typeof $.addthis().config).toBe('function');
         });
 
-        it('$.addthis.config.defaults should be an empty object', function() {
-            expect($.addthis.config.defaults).toEqual({});
+        it('$.addthis().config.defaults should be an empty object', function() {
+            expect($.addthis().defaults.config).toEqual({});
         });
 
-        it('$.addthis.config.current should be an empty object', function() {
-            expect($.addthis.config.current).toEqual({});
+        it('$.addthis().config.current should be an empty object', function() {
+            expect($.addthis().current.config).toEqual({});
         });
 
-        it('$.addthis.share should be a function', function() {
-            expect(typeof $.addthis.share).toBe('function');
+        it('$.addthis().share should be a function', function() {
+            expect(typeof $.addthis().share).toBe('function');
         });
 
-        it('$.addthis.share.defaults should be an empty object', function() {
-            expect($.addthis.share.defaults).toEqual({});
+        it('$.addthis().share.defaults should be an empty object', function() {
+            expect($.addthis().defaults.share).toEqual({});
         });
 
-        it('$.addthis.share.current should be an empty object', function() {
-            expect($.addthis.share.current).toEqual({});
+        it('$.addthis().share.current should be an empty object', function() {
+            expect($.addthis().current.share).toEqual({});
         });
 
-        it('$.addthis.shareUrl should be a function', function() {
-            expect(typeof $.addthis.shareUrl).toBe('function');
+        it('$.addthis().shareUrl should be a function', function() {
+            expect(typeof $.addthis().shareUrl).toBe('function');
         });
 
-        it('$.addthis.shareTitle should be a function', function() {
-            expect(typeof $.addthis.shareTitle).toBe('function');
+        it('$.addthis().shareTitle should be a function', function() {
+            expect(typeof $.addthis().shareTitle).toBe('function');
         });
 
-        it('$.addthis.shareDescription should be a function', function() {
-            expect(typeof $.addthis.shareDescription).toBe('function');
+        it('$.addthis().shareDescription should be a function', function() {
+            expect(typeof $.addthis().shareDescription).toBe('function');
         });
 
-        it('$.addthis.shareMedia should be a function', function() {
-            expect(typeof $.addthis.shareMedia).toBe('function');
+        it('$.addthis().shareMedia should be a function', function() {
+            expect(typeof $.addthis().shareMedia).toBe('function');
         });
 
-        it('$.addthis.twitterVia should be a function', function() {
-            expect(typeof $.addthis.twitterVia).toBe('function');
+        it('$.addthis().twitterVia should be a function', function() {
+            expect(typeof $.addthis().twitterVia).toBe('function');
         });
 
-        it('$.addthis.urlShortening should be a function', function() {
-            expect(typeof $.addthis.urlShortening).toBe('function');
+        it('$.addthis().urlShortening should be a function', function() {
+            expect(typeof $.addthis().urlShortening).toBe('function');
         });
     });
 

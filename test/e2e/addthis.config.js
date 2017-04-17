@@ -1,6 +1,6 @@
 //var webdriverio = require('webdriverio');
 
-describe('$.addthis.config', function() {
+describe('$.addthis().config', function() {
     var $;
 
     beforeEach(function(done) {
@@ -37,26 +37,26 @@ describe('$.addthis.config', function() {
     });
 
     it('function should not set window.addthis_config to be the the same object as the input', function() {
-        $.addthis.config(newConfigs);
+        $.addthis().config(newConfigs);
         expect(newConfigs).not.toBe(window.addthis_config);
     });
 
     it('function should set window.addthis_share values', function() {
-        $.addthis.config(newConfigs);
+        $.addthis().config(newConfigs);
         expect(window.addthis_config.foo).toBe('bar');
     });
 
     it('should change addthis_plugin_info.mode from "AddThis" to "Local" if the property ignore_server_config is true', function() {
         expect(window.addthis_plugin_info.plugin_mode).toBe('AddThis');
-        $.addthis.config({ignore_server_config: true});
-        expect($.addthis.config.current).toEqual({ignore_server_config: true});
+        $.addthis().config({ignore_server_config: true});
+        expect($.addthis().current.config).toEqual({ignore_server_config: true});
         expect(window.addthis_config).toEqual({ignore_server_config: true});
         expect(window.addthis_plugin_info.plugin_mode).toBe('Local');
     });
 
     it('should set addthis_plugin_info.mode to "AddThis" if the property ignore_server_config is false', function() {
-        $.addthis.config({ignore_server_config: false});
-        expect($.addthis.config.current).toEqual({ignore_server_config: false});
+        $.addthis().config({ignore_server_config: false});
+        expect($.addthis().current.config).toEqual({ignore_server_config: false});
         expect(window.addthis_config).toEqual({ignore_server_config: false});
         expect(window.addthis_plugin_info.plugin_mode).toBe('AddThis');
     });
