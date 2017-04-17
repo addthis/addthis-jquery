@@ -26,14 +26,13 @@
             _lastTs: 0,
             pending: 0
         },
-        config: {
-            defaults: {},
-            current: {}
-        },
-        share: {
-            defaults: {},
-            current: {}
-        }
+        config: {},
+        share: {}
+    };
+
+    var defaults = {
+        config: {},
+        share: {}
     };
 
     function plugin(parent) {
@@ -43,13 +42,15 @@
         this.layers_refresh = layers_refresh;
         this.config = config;
         this.share = share;
-        this.shareUrl = share.shareUrl;
-        this.shareTitle = share.shareTitle;
-        this.shareDescription = share.shareDescription;
-        this.shareMedia = share.shareMedia;
-        this.twitterVia = this.twitterVia;
+        this.shareUrl = shareUrl;
+        this.shareTitle = shareTitle;
+        this.shareDescription = shareDescription;
+        this.shareMedia = shareMedia;
+        this.twitterVia = twitterVia;
         this.urlShortening = urlShortening;
         this.tool = tool;
+        this.defaults = defaults;
+        this.current = settings;
     };
 
     /**
@@ -106,8 +107,8 @@
     var layers_refresh = function() {
         settings.layers_refresh._lastTs = (new Date()).getTime();
 
-        window.addthis_config = $.extend({}, settings.config.current);
-        window.addthis_share = $.extend({}, settings.share.current);
+        window.addthis_config = $.extend({}, settings.config);
+        window.addthis_share = $.extend({}, settings.share);
 
         // if `addthis.layers.refresh` doesn't exist yet, do nothing
         // FYI: `addhtis.layers.refresh` won't exist until SmartLayers has
@@ -140,8 +141,8 @@
                 clearInterval(settings.layers_refresh._intervalId);
                 settings.layers_refresh._intervalId = false;
                 window.addthis.layers.refresh(
-                    settings.share.current.url,
-                    settings.share.current.title
+                    settings.share.url,
+                    settings.share.title
                 );
             }
         };
@@ -160,7 +161,7 @@
      * @return {jQuery} the jQuery function
      **/
     var config = function(options) {
-        var opts = $.extend({}, settings.config.defaults, options);
+        var opts = $.extend({}, defaults.config, options);
 
         // `addthis_config.ignore_server_config` means profile ID settings
         // will be ignored.
@@ -170,7 +171,7 @@
             window.addthis_plugin_info.plugin_mode = 'AddThis';
         }
 
-        settings.config.current = opts;
+        settings.config = opts;
         this.layers_refresh();
         return $;
     };
@@ -184,24 +185,24 @@
      * @return {jQuery} the jQuery function
      **/
     var share = function(options) {
-        var opts = $.extend({}, settings.share.defaults, options);
+        var opts = $.extend({}, defaults.share, options);
 
         // setside url, title, description, media as we'll need these on every
         // addthis.layer_refresh call
         if (opts.url) {
-            settings.share.defaults.url = opts.url;
+            defaults.share.url = opts.url;
         }
         if (opts.title) {
-            settings.share.defaults.title = opts.title;
+            defaults.share.title = opts.title;
         }
         if (opts.description) {
-            settings.share.defaults.description = opts.description;
+            defaults.share.description = opts.description;
         }
         if (opts.media) {
-            settings.share.defaults.media = opts.media;
+            defaults.share.media = opts.media;
         }
 
-        settings.share.current = opts;
+        settings.share = opts;
         this.layers_refresh();
         return $;
     };
@@ -223,8 +224,8 @@
      * @return {jQuery} the jQuery function
      **/
     var shareUrl = function(url) {
-        settings.share.defaults.url = url;
-        settings.share.current.url = url;
+        defaults.share.url = url;
+        settings.share.url = url;
         this.layers_refresh();
         return $;
     };
@@ -252,8 +253,8 @@
      * @return {jQuery} the jQuery function
      **/
     var shareTitle = function(title) {
-        settings.share.defaults.title = title;
-        settings.share.current.title = title;
+        defaults.share.title = title;
+        settings.share.title = title;
         this.layers_refresh();
         return $;
     };
@@ -283,8 +284,8 @@
      * @return {jQuery} the jQuery function
      **/
     var shareDescription = function(description) {
-        settings.share.defaults.description = description;
-        settings.share.current.description = description;
+        defaults.share.description = description;
+        settings.share.description = description;
         this.layers_refresh();
         return $;
     };
@@ -312,8 +313,8 @@
      * @return {jQuery} the jQuery function
      **/
     var shareMedia = function(media) {
-        settings.share.defaults.media = media;
-        settings.share.current.media = media;
+        defaults.share.media = media;
+        settings.share.media = media;
         this.layers_refresh();
         return $;
     };
@@ -350,10 +351,10 @@
      **/
     var twitterVia = function(handle) {
         // add/delete for current addthis_share value
-        twitterViaHelper(handle, settings.share.current);
+        twitterViaHelper(handle, settings.share);
 
         // add/delete for default addthis_share value
-        twitterViaHelper(handle, settings.share.defaults);
+        twitterViaHelper(handle, defaults.share);
 
         this.layers_refresh();
         return $;
@@ -394,10 +395,10 @@
      **/
     var urlShortening = function(urlShorteningService, socialService) {
         // add url shortener to current values for addthis_share
-        urlShorteningHelper(urlShorteningService, socialService, settings.share.current);
+        urlShorteningHelper(urlShorteningService, socialService, settings.share);
 
         // add url shortener to default values for addthis_share
-        urlShorteningHelper(urlShorteningService, socialService, settings.share.defaults);
+        urlShorteningHelper(urlShorteningService, socialService, defaults.share);
 
         this.layers_refresh();
         return $;
@@ -542,16 +543,16 @@
         // if the user didn't set any general configuration options through
         // the module and window.addthis_config looks right on page and has
         // something in it use it
-        settings.config.current = $.extend({}, window.addthis_config);
+        settings.config = $.extend({}, window.addthis_config);
     } else {
-        window.addthis_config = $.extend({}, settings.config.current);
+        window.addthis_config = $.extend({}, settings.config);
     }
 
     if (typeof window.addthis_share === 'object') {
         // if the user didn't set any share configuration options through
         // the module and window.addthis_config looks right on page and has
         // something in it use it
-        settings.share.current = $.extend({}, window.addthis_share);
+        settings.share = $.extend({}, window.addthis_share);
 
         if (typeof window.addthis === 'undefined') {
             /**
@@ -561,24 +562,24 @@
              * by it addthis_widget.js and not on page. Let's only hold on
              * to those properties if we know they were set on page
              **/
-            if (settings.share.current.url) {
-                settings.share.defaults.url = settings.share.current.url;
+            if (settings.share.url) {
+                defaults.share.url = settings.share.url;
             }
 
-            if (settings.share.current.title) {
-                settings.share.defaults.title = settings.share.current.title;
+            if (settings.share.title) {
+                defaults.share.title = settings.share.title;
             }
 
-            if (settings.share.current.description) {
-                settings.share.defaults.description = settings.share.current.description;
+            if (settings.share.description) {
+                defaults.share.description = settings.share.description;
             }
 
-            if (settings.share.current.media) {
-                settings.share.defaults.media = settings.share.current.media;
+            if (settings.share.media) {
+                defaults.share.media = settings.share.media;
             }
         }
     } else {
-        window.addthis_share = $.extend({}, settings.share.current);
+        window.addthis_share = $.extend({}, settings.share);
     }
 
     $[pluginName] = function() {
