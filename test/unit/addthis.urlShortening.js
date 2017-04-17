@@ -1,30 +1,30 @@
 
 'use strict';
 
-describe('$.addthis.urlShortening', function() {
+describe('$.addthis().urlShortening', function() {
     var urlShorteningService = 'bitly';
     var socialService = 'twitter';
 
     afterEach(function() {
-        $.addthis.config.defaults = {};
-        $.addthis.config.current = {};
+        $.addthis().defaults.config = {};
+        $.addthis().current.config = {};
 
-        $.addthis.share.defaults = {};
-        $.addthis.share.current = {};
+        $.addthis().defaults.share = {};
+        $.addthis().current.share = {};
 
-        $.addthis.load._callbacks = [];
+        $.addthis().current.load._callbacks = [];
 
-        $.addthis.layers_refresh._lastTs = 0;
-        $.addthis.layers_refresh.pending = 0;
+        $.addthis().current.layers_refresh._lastTs = 0;
+        $.addthis().current.layers_refresh.pending = 0;
 
-        if ($.addthis.load._intervalId) {
-            clearInterval($.addthis.load._intervalId);
-            $.addthis.load._intervalId = false;
+        if ($.addthis().current.load._intervalId) {
+            clearInterval($.addthis().current.load._intervalId);
+            $.addthis().current.load._intervalId = false;
         }
 
-        if ($.addthis.layers_refresh._intervalId) {
-            clearInterval($.addthis.layers_refresh._intervalId);
-            $.addthis.layers_refresh._intervalId = false;
+        if ($.addthis().current.layers_refresh._intervalId) {
+            clearInterval($.addthis().current.layers_refresh._intervalId);
+            $.addthis().current.layers_refresh._intervalId = false;
         }
 
         delete window.addthis;
@@ -33,115 +33,116 @@ describe('$.addthis.urlShortening', function() {
     });
 
     it('should be defined', function() {
-        expect($.addthis.urlShortening).toBeDefined();
+        expect($.addthis().urlShortening).toBeDefined();
     });
 
     it('should return the jQuery function', function() {
-        var jQueryCopy = $.addthis.urlShortening();
+        var jQueryCopy = $.addthis().urlShortening();
         expect(jQueryCopy).toEqual($);
     });
 
-    it('should call $.addthis.layers_refresh', function() {
-        spyOn($.addthis, 'layers_refresh').and.callThrough();
-        $.addthis.urlShortening(urlShorteningService, socialService);
-        expect($.addthis.layers_refresh.calls.count()).toEqual(1);
+    it('should call $.addthis().layers_refresh', function() {
+        var addthisPlugin = $.addthis();
+        spyOn(addthisPlugin, 'layers_refresh').and.callThrough();
+        addthisPlugin.urlShortening(urlShorteningService, socialService);
+        expect(addthisPlugin.layers_refresh.calls.count()).toEqual(1);
     });
 
     describe('should configure url shortening for passed params', function() {
         it('in window.addthis_share', function() {
-            $.addthis.urlShortening(urlShorteningService, socialService);
+            $.addthis().urlShortening(urlShorteningService, socialService);
             expect(window.addthis_share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
             expect(window.addthis_share.shorteners[urlShorteningService]).toEqual({});
         });
 
-        it('in $.addthis.share.current', function() {
-            $.addthis.urlShortening(urlShorteningService, socialService);
-            expect($.addthis.share.current.url_transforms.shorten[socialService]).toBe(urlShorteningService);
-            expect($.addthis.share.current.shorteners[urlShorteningService]).toEqual({});
+        it('in $.addthis().current.share', function() {
+            $.addthis().urlShortening(urlShorteningService, socialService);
+            expect($.addthis().current.share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
+            expect($.addthis().current.share.shorteners[urlShorteningService]).toEqual({});
         });
 
-        it('in $.addthis.share.defaults', function() {
-            $.addthis.urlShortening(urlShorteningService, socialService);
-            expect($.addthis.share.defaults.url_transforms.shorten[socialService]).toBe(urlShorteningService);
-            expect($.addthis.share.defaults.shorteners[urlShorteningService]).toEqual({});
+        it('in $.addthis().defaults.share', function() {
+            $.addthis().urlShortening(urlShorteningService, socialService);
+            expect($.addthis().defaults.share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
+            expect($.addthis().defaults.share.shorteners[urlShorteningService]).toEqual({});
         });
     });
 
     describe('should set url_transforms.shorten & shorteners without touching other items in url_transforms', function() {
         it('in window.addthis_share', function() {
-            $.addthis.share({'url_transforms': {'foo': 'bar'}});
-            $.addthis.urlShortening(urlShorteningService, socialService);
+            $.addthis().share({'url_transforms': {'foo': 'bar'}});
+            $.addthis().urlShortening(urlShorteningService, socialService);
             expect(window.addthis_share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
             expect(window.addthis_share.shorteners[urlShorteningService]).toEqual({});
             expect(window.addthis_share.url_transforms.foo).toBe('bar');
         });
 
-        it('in $.addthis.share.current', function() {
-            $.addthis.share({'url_transforms': {'foo': 'bar'}});
-            $.addthis.urlShortening(urlShorteningService, socialService);
-            expect($.addthis.share.current.url_transforms.shorten[socialService]).toBe(urlShorteningService);
-            expect($.addthis.share.current.shorteners[urlShorteningService]).toEqual({});
-            expect($.addthis.share.current.url_transforms.foo).toBe('bar');
+        it('in $.addthis().current.share', function() {
+            $.addthis().share({'url_transforms': {'foo': 'bar'}});
+            $.addthis().urlShortening(urlShorteningService, socialService);
+            expect($.addthis().current.share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
+            expect($.addthis().current.share.shorteners[urlShorteningService]).toEqual({});
+            expect($.addthis().current.share.url_transforms.foo).toBe('bar');
         });
 
-        it('in $.addthis.share.defaults', function() {
-            $.addthis.share.defaults = {'url_transforms': {'foo': 'bar'}};
-            $.addthis.urlShortening(urlShorteningService, socialService);
-            expect($.addthis.share.defaults.url_transforms.shorten[socialService]).toBe(urlShorteningService);
-            expect($.addthis.share.defaults.shorteners[urlShorteningService]).toEqual({});
-            expect($.addthis.share.defaults.url_transforms.foo).toBe('bar');
+        it('in $.addthis().defaults.share', function() {
+            $.addthis().defaults.share = {'url_transforms': {'foo': 'bar'}};
+            $.addthis().urlShortening(urlShorteningService, socialService);
+            expect($.addthis().defaults.share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
+            expect($.addthis().defaults.share.shorteners[urlShorteningService]).toEqual({});
+            expect($.addthis().defaults.share.url_transforms.foo).toBe('bar');
         });
     });
 
     describe('should set url_transforms.shorten & shorteners without touching other items in url_transforms.shorten', function() {
         it('in window.addthis_share', function() {
-            $.addthis.share({'url_transforms': {'shorten': {'foo': 'bar'}}});
-            $.addthis.urlShortening(urlShorteningService, socialService);
+            $.addthis().share({'url_transforms': {'shorten': {'foo': 'bar'}}});
+            $.addthis().urlShortening(urlShorteningService, socialService);
             expect(window.addthis_share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
             expect(window.addthis_share.shorteners[urlShorteningService]).toEqual({});
             expect(window.addthis_share.url_transforms.shorten.foo).toBe('bar');
         });
 
-        it('in $.addthis.share.current', function() {
-            $.addthis.share({'url_transforms': {'shorten': {'foo': 'bar'}}});
-            $.addthis.urlShortening(urlShorteningService, socialService);
-            expect($.addthis.share.current.url_transforms.shorten[socialService]).toBe(urlShorteningService);
-            expect($.addthis.share.current.shorteners[urlShorteningService]).toEqual({});
-            expect($.addthis.share.current.url_transforms.shorten.foo).toBe('bar');
+        it('in $.addthis().current.share', function() {
+            $.addthis().share({'url_transforms': {'shorten': {'foo': 'bar'}}});
+            $.addthis().urlShortening(urlShorteningService, socialService);
+            expect($.addthis().current.share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
+            expect($.addthis().current.share.shorteners[urlShorteningService]).toEqual({});
+            expect($.addthis().current.share.url_transforms.shorten.foo).toBe('bar');
         });
 
-        it('in $.addthis.share.defaults', function() {
-            $.addthis.share.defaults = {'url_transforms': {'shorten': {'foo': 'bar'}}};
-            $.addthis.urlShortening(urlShorteningService, socialService);
-            expect($.addthis.share.defaults.url_transforms.shorten[socialService]).toBe(urlShorteningService);
-            expect($.addthis.share.defaults.shorteners[urlShorteningService]).toEqual({});
-            expect($.addthis.share.defaults.url_transforms.shorten.foo).toBe('bar');
+        it('in $.addthis().defaults.share', function() {
+            $.addthis().defaults.share = {'url_transforms': {'shorten': {'foo': 'bar'}}};
+            $.addthis().urlShortening(urlShorteningService, socialService);
+            expect($.addthis().defaults.share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
+            expect($.addthis().defaults.share.shorteners[urlShorteningService]).toEqual({});
+            expect($.addthis().defaults.share.url_transforms.shorten.foo).toBe('bar');
         });
     });
 
     describe('should set url_transforms.shorten & shorteners without touching other items in shorteners', function() {
         it('in window.addthis_share', function() {
-            $.addthis.share({'shorteners': {'foo': 'bar'}});
-            $.addthis.urlShortening(urlShorteningService, socialService);
+            $.addthis().share({'shorteners': {'foo': 'bar'}});
+            $.addthis().urlShortening(urlShorteningService, socialService);
             expect(window.addthis_share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
             expect(window.addthis_share.shorteners[urlShorteningService]).toEqual({});
             expect(window.addthis_share.shorteners.foo).toBe('bar');
         });
 
-        it('in $.addthis.share.current', function() {
-            $.addthis.share({'shorteners': {'foo': 'bar'}});
-            $.addthis.urlShortening(urlShorteningService, socialService);
-            expect($.addthis.share.current.url_transforms.shorten[socialService]).toBe(urlShorteningService);
-            expect($.addthis.share.current.shorteners[urlShorteningService]).toEqual({});
-            expect($.addthis.share.current.shorteners.foo).toBe('bar');
+        it('in $.addthis().current.share', function() {
+            $.addthis().share({'shorteners': {'foo': 'bar'}});
+            $.addthis().urlShortening(urlShorteningService, socialService);
+            expect($.addthis().current.share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
+            expect($.addthis().current.share.shorteners[urlShorteningService]).toEqual({});
+            expect($.addthis().current.share.shorteners.foo).toBe('bar');
         });
 
-        it('in $.addthis.share.defaults', function() {
-            $.addthis.share.defaults = {'shorteners': {'foo': 'bar'}};
-            $.addthis.urlShortening(urlShorteningService, socialService);
-            expect($.addthis.share.defaults.url_transforms.shorten[socialService]).toBe(urlShorteningService);
-            expect($.addthis.share.defaults.shorteners[urlShorteningService]).toEqual({});
-            expect($.addthis.share.defaults.shorteners.foo).toBe('bar');
+        it('in $.addthis().defaults.share', function() {
+            $.addthis().defaults.share = {'shorteners': {'foo': 'bar'}};
+            $.addthis().urlShortening(urlShorteningService, socialService);
+            expect($.addthis().defaults.share.url_transforms.shorten[socialService]).toBe(urlShorteningService);
+            expect($.addthis().defaults.share.shorteners[urlShorteningService]).toEqual({});
+            expect($.addthis().defaults.share.shorteners.foo).toBe('bar');
         });
     });
 });

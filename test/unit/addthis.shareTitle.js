@@ -1,32 +1,32 @@
 
 'use strict';
 
-describe('$.addthis.shareTitle', function() {
+describe('$.addthis().shareTitle', function() {
     var testConfigs1 = {
         'foo': 'bar'
     };
     var title = 'hello world';
 
     afterEach(function() {
-        $.addthis.config.defaults = {};
-        $.addthis.config.current = {};
+        $.addthis().defaults.config = {};
+        $.addthis().current.config = {};
 
-        $.addthis.share.defaults = {};
-        $.addthis.share.current = {};
+        $.addthis().defaults.share = {};
+        $.addthis().current.share = {};
 
-        $.addthis.load._callbacks = [];
+        $.addthis().current.load._callbacks = [];
 
-        $.addthis.layers_refresh._lastTs = 0;
-        $.addthis.layers_refresh.pending = 0;
+        $.addthis().current.layers_refresh._lastTs = 0;
+        $.addthis().current.layers_refresh.pending = 0;
 
-        if ($.addthis.load._intervalId) {
-            clearInterval($.addthis.load._intervalId);
-            $.addthis.load._intervalId = false;
+        if ($.addthis().current.load._intervalId) {
+            clearInterval($.addthis().current.load._intervalId);
+            $.addthis().current.load._intervalId = false;
         }
 
-        if ($.addthis.layers_refresh._intervalId) {
-            clearInterval($.addthis.layers_refresh._intervalId);
-            $.addthis.layers_refresh._intervalId = false;
+        if ($.addthis().current.layers_refresh._intervalId) {
+            clearInterval($.addthis().current.layers_refresh._intervalId);
+            $.addthis().current.layers_refresh._intervalId = false;
         }
 
         delete window.addthis;
@@ -35,35 +35,36 @@ describe('$.addthis.shareTitle', function() {
     });
 
     it('should be defined', function() {
-        expect($.addthis.shareTitle).toBeDefined();
+        expect($.addthis().shareTitle).toBeDefined();
     });
 
     it('should return the jQuery function', function() {
-        var jQueryCopy = $.addthis.shareTitle();
+        var jQueryCopy = $.addthis().shareTitle();
         expect(jQueryCopy).toEqual($);
     });
 
-    it('should call $.addthis.layers_refresh', function() {
-        spyOn($.addthis, 'layers_refresh').and.callThrough();
-        $.addthis.shareTitle(title);
-        expect($.addthis.layers_refresh.calls.count()).toEqual(1);
+    it('should call $.addthis().layers_refresh', function() {
+        var addthisPlugin = $.addthis();
+        spyOn(addthisPlugin, 'layers_refresh').and.callThrough();
+        addthisPlugin.shareTitle(title);
+        expect(addthisPlugin.layers_refresh.calls.count()).toEqual(1);
     });
 
     it('should set window.addthis_share.title to what we passed', function() {
-        $.addthis.shareTitle(title);
+        $.addthis().shareTitle(title);
         expect(window.addthis_share.title).toBe(title);
-        expect($.addthis.share.defaults.title).toBe(title);
-        expect($.addthis.share.current.title).toBe(title);
+        expect($.addthis().defaults.share.title).toBe(title);
+        expect($.addthis().current.share.title).toBe(title);
     });
 
-    it('should not touch existing defaults in $.addthis.share.defaults', function() {
-        $.addthis.share.defaults = testConfigs1;
-        $.addthis.shareTitle(title);
-        expect($.addthis.share.defaults.title).toEqual(title);
-        expect($.addthis.share.current.title).toEqual(title);
+    it('should not touch existing defaults in $.addthis().defaults.share', function() {
+        $.addthis().defaults.share = testConfigs1;
+        $.addthis().shareTitle(title);
+        expect($.addthis().defaults.share.title).toEqual(title);
+        expect($.addthis().current.share.title).toEqual(title);
         expect(window.addthis_share.title).toEqual(title);
-        expect($.addthis.share.defaults.foo).toEqual('bar');
-        expect($.addthis.share.current.foo).not.toEqual('bar');
+        expect($.addthis().defaults.share.foo).toEqual('bar');
+        expect($.addthis().current.share.foo).not.toEqual('bar');
         expect(window.addthis_share.foo).not.toEqual('bar');
     });
 });

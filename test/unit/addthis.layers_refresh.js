@@ -1,26 +1,26 @@
 'use strict';
 
-describe('$.addthis.layers_refresh', function() {
+describe('$.addthis().layers_refresh', function() {
     afterEach(function() {
-        $.addthis.config.defaults = {};
-        $.addthis.config.current = {};
+        $.addthis().defaults.config = {};
+        $.addthis().current.config = {};
 
-        $.addthis.share.defaults = {};
-        $.addthis.share.current = {};
+        $.addthis().defaults.share = {};
+        $.addthis().current.share = {};
 
-        $.addthis.load._callbacks = [];
+        $.addthis().current.load._callbacks = [];
 
-        $.addthis.layers_refresh._lastTs = 0;
-        $.addthis.layers_refresh.pending = 0;
+        $.addthis().current.layers_refresh._lastTs = 0;
+        $.addthis().current.layers_refresh.pending = 0;
 
-        if ($.addthis.load._intervalId) {
-            clearInterval($.addthis.load._intervalId);
-            $.addthis.load._intervalId = false;
+        if ($.addthis().current.load._intervalId) {
+            clearInterval($.addthis().current.load._intervalId);
+            $.addthis().current.load._intervalId = false;
         }
 
-        if ($.addthis.layers_refresh._intervalId) {
-            clearInterval($.addthis.layers_refresh._intervalId);
-            $.addthis.layers_refresh._intervalId = false;
+        if ($.addthis().current.layers_refresh._intervalId) {
+            clearInterval($.addthis().current.layers_refresh._intervalId);
+            $.addthis().current.layers_refresh._intervalId = false;
         }
 
         delete window.addthis;
@@ -29,31 +29,31 @@ describe('$.addthis.layers_refresh', function() {
     });
 
     it('should be defined', function() {
-        expect($.addthis.layers_refresh).toBeDefined();
+        expect($.addthis().layers_refresh).toBeDefined();
     });
 
     it('should return the jQuery function', function() {
-        var jQueryCopy = $.addthis.layers_refresh();
+        var jQueryCopy = $.addthis().layers_refresh();
         expect(jQueryCopy).toEqual($);
     });
 
     it('should do nothing if window.addthis is defined but window.addthis.layers is not defined', function() {
-        expect($.addthis.layers_refresh._intervalId).toBe(false);
+        expect($.addthis().current.layers_refresh._intervalId).toBe(false);
         window.addthis = {};
-        $.addthis.layers_refresh();
-        expect($.addthis.layers_refresh._intervalId).toBe(false);
+        $.addthis().layers_refresh();
+        expect($.addthis().current.layers_refresh._intervalId).toBe(false);
     });
 
     it('should do nothing if window.addthis.layers is defined but window.addthis.layers.refresh is not defined', function() {
-        expect($.addthis.layers_refresh._intervalId).toBe(false);
+        expect($.addthis().current.layers_refresh._intervalId).toBe(false);
         window.addthis = { layers: {} };
-        $.addthis.layers_refresh();
-        expect($.addthis.layers_refresh._intervalId).toBe(false);
+        $.addthis().layers_refresh();
+        expect($.addthis().current.layers_refresh._intervalId).toBe(false);
     });
 
 
     it('should set up an interval if window.addthis.layers.refresh is defined', function() {
-        expect($.addthis.layers_refresh._intervalId).toBe(false);
+        expect($.addthis().current.layers_refresh._intervalId).toBe(false);
         window.addthis = {
             layers: {
                 lastViewRegistered: 0,
@@ -61,8 +61,8 @@ describe('$.addthis.layers_refresh', function() {
             }
         };
 
-        $.addthis.layers_refresh();
-        expect($.addthis.layers_refresh._intervalId).not.toBe(false);
+        $.addthis().layers_refresh();
+        expect($.addthis().current.layers_refresh._intervalId).not.toBe(false);
     });
 
     it('does not set up a new interval when one is already setup', function() {
@@ -73,11 +73,11 @@ describe('$.addthis.layers_refresh', function() {
             }
         };
 
-        $.addthis.layers_refresh();
-        expect($.addthis.layers_refresh._intervalId).not.toBe(false);
-        var firstIntervalId = $.addthis.layers_refresh._intervalId;
-        $.addthis.layers_refresh();
-        expect($.addthis.layers_refresh._intervalId).toBe(firstIntervalId);
+        $.addthis().layers_refresh();
+        expect($.addthis().current.layers_refresh._intervalId).not.toBe(false);
+        var firstIntervalId = $.addthis().current.layers_refresh._intervalId;
+        $.addthis().layers_refresh();
+        expect($.addthis().current.layers_refresh._intervalId).toBe(firstIntervalId);
     });
 
     it('updates timestamp when run again', function(done) {
@@ -88,44 +88,47 @@ describe('$.addthis.layers_refresh', function() {
             }
         };
 
-        $.addthis.layers_refresh();
-        var firstTs = $.addthis.layers_refresh._lastTs;
+        $.addthis().layers_refresh();
+        var firstTs = $.addthis().current.layers_refresh._lastTs;
         window.setTimeout(function() {
-            $.addthis.layers_refresh();
-            expect($.addthis.layers_refresh._lastTs).not.toBe(firstTs);
+            $.addthis().layers_refresh();
+            expect($.addthis().current.layers_refresh._lastTs).not.toBe(firstTs);
             done();
         }, 1);
     });
 
-    it('does not run window.addthis.layers.refresh until 100ms after the last call to $.addthis.layers_refresh', function(done) {
+    it('does not run window.addthis.layers.refresh until 100ms after the last call to $.addthis().layers_refresh', function(done) {
         window.addthis = {
             layers: {
                 lastViewRegistered: 0,
                 refresh: function() {}
             }
         };
-        spyOn(window.addthis.layers, 'refresh').and.callThrough();
-        spyOn($.addthis, 'layers_refresh').and.callThrough();
 
-        $.addthis.layers_refresh();
+        var addthisPlugin = $.addthis();
+
+        spyOn(window.addthis.layers, 'refresh').and.callThrough();
+        spyOn(addthisPlugin, 'layers_refresh').and.callThrough();
+
+        addthisPlugin.layers_refresh();
 
         expect(window.addthis.layers.refresh.calls.count()).toEqual(0);
-        expect($.addthis.layers_refresh.calls.count()).toEqual(1);
+        expect(addthisPlugin.layers_refresh.calls.count()).toEqual(1);
 
         window.setTimeout(function() {
-            $.addthis.layers_refresh();
+            addthisPlugin.layers_refresh();
             expect(window.addthis.layers.refresh.calls.count()).toEqual(0);
-            expect($.addthis.layers_refresh.calls.count()).toEqual(2);
+            expect(addthisPlugin.layers_refresh.calls.count()).toEqual(2);
         }, 50);
 
         window.setTimeout(function() {
-            expect($.addthis.layers_refresh.calls.count()).toEqual(2);
+            expect(addthisPlugin.layers_refresh.calls.count()).toEqual(2);
             expect(window.addthis.layers.refresh.calls.count()).toEqual(0);
         }, 101);
 
         window.setTimeout(function() {
             expect(window.addthis.layers.refresh.calls.count()).toEqual(1);
-            expect($.addthis.layers_refresh.calls.count()).toEqual(2);
+            expect(addthisPlugin.layers_refresh.calls.count()).toEqual(2);
             done();
         }, 251);
     });
@@ -137,19 +140,22 @@ describe('$.addthis.layers_refresh', function() {
                 refresh: function() {}
             }
         };
-        spyOn(window.addthis.layers, 'refresh').and.callThrough();
 
-        spyOn($.addthis, 'layers_refresh').and.callThrough();
-        expect($.addthis.layers_refresh._intervalId).toBe(false);
-        $.addthis.layers_refresh();
-        expect($.addthis.layers_refresh._intervalId).not.toBe(false);
+        var addthisPlugin = $.addthis();
+
+        spyOn(window.addthis.layers, 'refresh').and.callThrough();
+        spyOn(addthisPlugin, 'layers_refresh').and.callThrough();
+
+        expect(addthisPlugin.current.layers_refresh._intervalId).toBe(false);
+        addthisPlugin.layers_refresh();
+        expect(addthisPlugin.current.layers_refresh._intervalId).not.toBe(false);
 
         expect(window.addthis.layers.refresh.calls.count()).toEqual(0);
-        expect($.addthis.layers_refresh.calls.count()).toEqual(1);
+        expect(addthisPlugin.layers_refresh.calls.count()).toEqual(1);
 
         window.setTimeout(function() {
             expect(window.addthis.layers.refresh.calls.count()).toEqual(1);
-            expect($.addthis.layers_refresh._intervalId).toBe(false);
+            expect(addthisPlugin.current.layers_refresh._intervalId).toBe(false);
             done();
         }, 101);
     });

@@ -2,25 +2,25 @@
 
 describe('by default window.addthis_plugin_info', function() {
     afterEach(function() {
-        $.addthis.config.defaults = {};
-        $.addthis.config.current = {};
+        $.addthis().defaults.config = {};
+        $.addthis().current.config = {};
 
-        $.addthis.share.defaults = {};
-        $.addthis.share.current = {};
+        $.addthis().defaults.share = {};
+        $.addthis().current.share = {};
 
-        $.addthis.load._callbacks = [];
+        $.addthis().current.load._callbacks = [];
 
-        $.addthis.layers_refresh._lastTs = 0;
-        $.addthis.layers_refresh.pending = 0;
+        $.addthis().current.layers_refresh._lastTs = 0;
+        $.addthis().current.layers_refresh.pending = 0;
 
-        if ($.addthis.load._intervalId) {
-            clearInterval($.addthis.load._intervalId);
-            $.addthis.load._intervalId = false;
+        if ($.addthis().current.load._intervalId) {
+            clearInterval($.addthis().current.load._intervalId);
+            $.addthis().current.load._intervalId = false;
         }
 
-        if ($.addthis.layers_refresh._intervalId) {
-            clearInterval($.addthis.layers_refresh._intervalId);
-            $.addthis.layers_refresh._intervalId = false;
+        if ($.addthis().current.layers_refresh._intervalId) {
+            clearInterval($.addthis().current.layers_refresh._intervalId);
+            $.addthis().current.layers_refresh._intervalId = false;
         }
 
         delete window.addthis;

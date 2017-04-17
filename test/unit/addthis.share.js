@@ -1,7 +1,7 @@
 
 'use strict';
 
-describe('$.addthis.share', function() {
+describe('$.addthis().share', function() {
     var testConfigs1 = {
         'foo': 'bar'
     };
@@ -11,25 +11,25 @@ describe('$.addthis.share', function() {
     var media = 'https://www.addthis.com/img/png';
 
     afterEach(function() {
-        $.addthis.config.defaults = {};
-        $.addthis.config.current = {};
+        $.addthis().defaults.config = {};
+        $.addthis().current.config = {};
 
-        $.addthis.share.defaults = {};
-        $.addthis.share.current = {};
+        $.addthis().defaults.share = {};
+        $.addthis().current.share = {};
 
-        $.addthis.load._callbacks = [];
+        $.addthis().current.load._callbacks = [];
 
-        $.addthis.layers_refresh._lastTs = 0;
-        $.addthis.layers_refresh.pending = 0;
+        $.addthis().current.layers_refresh._lastTs = 0;
+        $.addthis().current.layers_refresh.pending = 0;
 
-        if ($.addthis.load._intervalId) {
-            clearInterval($.addthis.load._intervalId);
-            $.addthis.load._intervalId = false;
+        if ($.addthis().current.load._intervalId) {
+            clearInterval($.addthis().current.load._intervalId);
+            $.addthis().current.load._intervalId = false;
         }
 
-        if ($.addthis.layers_refresh._intervalId) {
-            clearInterval($.addthis.layers_refresh._intervalId);
-            $.addthis.layers_refresh._intervalId = false;
+        if ($.addthis().current.layers_refresh._intervalId) {
+            clearInterval($.addthis().current.layers_refresh._intervalId);
+            $.addthis().current.layers_refresh._intervalId = false;
         }
 
         delete window.addthis;
@@ -38,85 +38,86 @@ describe('$.addthis.share', function() {
     });
 
     it('should be defined', function() {
-        expect($.addthis.share).toBeDefined();
+        expect($.addthis().share).toBeDefined();
     });
 
     it('should return the jQuery function', function() {
-        var jQueryCopy = $.addthis.share();
+        var jQueryCopy = $.addthis().share();
         expect(jQueryCopy).toEqual($);
     });
 
-    it('should call $.addthis.layers_refresh', function() {
-        spyOn($.addthis, 'layers_refresh').and.callThrough();
-        $.addthis.share({});
-        expect($.addthis.layers_refresh.calls.count()).toEqual(1);
+    it('should call $.addthis().layers_refresh', function() {
+        var addthisPlugin = $.addthis();
+        spyOn(addthisPlugin, 'layers_refresh').and.callThrough();
+        addthisPlugin.share({});
+        expect(addthisPlugin.layers_refresh.calls.count()).toEqual(1);
     });
 
     it('should set window.addthis_share to a copy of what we passed', function() {
-        $.addthis.share(testConfigs1);
+        $.addthis().share(testConfigs1);
         expect(window.addthis_share).not.toBe(testConfigs1);
         expect(window.addthis_share).toEqual(testConfigs1);
-        expect($.addthis.share.current).toEqual(testConfigs1);
+        expect($.addthis().current.share).toEqual(testConfigs1);
     });
 
-    it('called with the url property should set $.addthis.share.defaults.url', function() {
+    it('called with the url property should set $.addthis().defaults.share.url', function() {
         var testConfigs2 = {url: url};
-        $.addthis.share(testConfigs2);
+        $.addthis().share(testConfigs2);
         expect(window.addthis_share).toEqual(testConfigs2);
-        expect($.addthis.share.current).toEqual(testConfigs2);
-        expect($.addthis.share.defaults.url).toEqual(url);
+        expect($.addthis().current.share).toEqual(testConfigs2);
+        expect($.addthis().defaults.share.url).toEqual(url);
     });
 
-    it('called with the title property should set $.addthis.share.defaults.title', function() {
+    it('called with the title property should set $.addthis().defaults.share.title', function() {
         var testConfigs2 = {title: title};
-        $.addthis.share(testConfigs2);
+        $.addthis().share(testConfigs2);
         expect(window.addthis_share).toEqual(testConfigs2);
-        expect($.addthis.share.current).toEqual(testConfigs2);
-        expect($.addthis.share.defaults.title).toEqual(title);
+        expect($.addthis().current.share).toEqual(testConfigs2);
+        expect($.addthis().defaults.share.title).toEqual(title);
     });
 
-    it('called with the description property should set $.addthis.share.defaults.description', function() {
+    it('called with the description property should set $.addthis().defaults.share.description', function() {
         var testConfigs2 = {description: description};
-        $.addthis.share(testConfigs2);
+        $.addthis().share(testConfigs2);
         expect(window.addthis_share).toEqual(testConfigs2);
-        expect($.addthis.share.current).toEqual(testConfigs2);
-        expect($.addthis.share.defaults.description).toEqual(description);
+        expect($.addthis().current.share).toEqual(testConfigs2);
+        expect($.addthis().defaults.share.description).toEqual(description);
     });
 
-    it('called with the media property should set $.addthis.share.defaults.media', function() {
+    it('called with the media property should set $.addthis().defaults.share.media', function() {
         var testConfigs2 = {media: media};
-        $.addthis.share(testConfigs2);
+        $.addthis().share(testConfigs2);
         expect(window.addthis_share).toEqual(testConfigs2);
-        expect($.addthis.share.current).toEqual(testConfigs2);
-        expect($.addthis.share.defaults.media).toEqual(media);
+        expect($.addthis().current.share).toEqual(testConfigs2);
+        expect($.addthis().defaults.share.media).toEqual(media);
     });
 
-    it('called with the url, title, description and media properties should set all the same properties in $.addthis.share.defaults', function() {
+    it('called with the url, title, description and media properties should set all the same properties in $.addthis().defaults.share', function() {
         var testConfigs2 = {
             url: url,
             title: title,
             description: description,
             media: media
         };
-        $.addthis.share(testConfigs2);
+        $.addthis().share(testConfigs2);
         expect(window.addthis_share).toEqual(testConfigs2);
-        expect($.addthis.share.current).toEqual(testConfigs2);
-        expect($.addthis.share.defaults.url).toEqual(url);
-        expect($.addthis.share.defaults.title).toEqual(title);
-        expect($.addthis.share.defaults.description).toEqual(description);
-        expect($.addthis.share.defaults.media).toEqual(media);
+        expect($.addthis().current.share).toEqual(testConfigs2);
+        expect($.addthis().defaults.share.url).toEqual(url);
+        expect($.addthis().defaults.share.title).toEqual(title);
+        expect($.addthis().defaults.share.description).toEqual(description);
+        expect($.addthis().defaults.share.media).toEqual(media);
     });
 
-    it('should use defaults in $.addthis.share.defaults', function() {
-        $.addthis.share.defaults = { url: url };
-        expect($.addthis.share.defaults.url).toEqual(url);
+    it('should use defaults in $.addthis().defaults.share.', function() {
+        $.addthis().defaults.share = { url: url };
+        expect($.addthis().defaults.share.url).toEqual(url);
 
-        $.addthis.share(testConfigs1);
+        $.addthis().share(testConfigs1);
         expect(window.addthis_share).not.toEqual(testConfigs1);
-        expect($.addthis.share.current).not.toEqual(testConfigs1);
+        expect($.addthis().current.share).not.toEqual(testConfigs1);
 
-        expect($.addthis.share.current.foo).toEqual('bar');
-        expect($.addthis.share.current.url).toEqual(url);
+        expect($.addthis().current.share.foo).toEqual('bar');
+        expect($.addthis().current.share.url).toEqual(url);
         expect(window.addthis_share.foo).toEqual('bar');
         expect(window.addthis_share.url).toEqual(url);
     });
