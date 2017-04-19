@@ -516,23 +516,22 @@
             // second param
             changeDataAttrOnToolFunctions(toolElement, toolElement);
             return toolElement;
-        } else if (typeof this.parent === 'object') {
-            if (typeof options.method !== 'undefined'
-                && typeof this.parent[options.method] === 'function'
-            ) {
-                this.parent[options.method](toolElement);
-                // wraps functions appendTo, insertAfter, insertBefore, prependTo,
-                // replaceAll to call addthis.layers.refresh after DOM manipulation
-                reDefineDOMManipulationFunctions(this.parent);
-                // adds functions shareUrl, shareTitle, shareDescription, shareMedia
-                // onto the element in the second param to change attrs data-url,
-                // data-title, data-description, data-media on the addthis tool in the
-                // second param
-                changeDataAttrOnToolFunctions(this.parent, toolElement);
-                layers_refresh();
+        } else if (typeof this.parent === 'object' &&
+            typeof options.method !== 'undefined' &&
+            typeof this.parent[options.method] === 'function'
+        ) {
+            this.parent[options.method](toolElement);
+            // wraps functions appendTo, insertAfter, insertBefore, prependTo,
+            // replaceAll to call addthis.layers.refresh after DOM manipulation
+            reDefineDOMManipulationFunctions(this.parent);
+            // adds functions shareUrl, shareTitle, shareDescription, shareMedia
+            // onto the element in the second param to change attrs data-url,
+            // data-title, data-description, data-media on the addthis tool in the
+            // second param
+            changeDataAttrOnToolFunctions(this.parent, toolElement);
+            this.layers_refresh();
 
-                return this.parent;
-            }
+            return this.parent;
         }
 
         return toolElement;
