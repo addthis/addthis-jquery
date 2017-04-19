@@ -461,7 +461,7 @@
 
             var newToolElement = createNewElementForBoostTools(options);
             element.empty().append(newToolElement);
-            this.layers_refresh();
+            layers_refresh();
             return element;
         };
     };
@@ -500,9 +500,11 @@
     };
 
     var tool = function(options) {
-        if (typeof options !== 'undefined') {
-            var toolElement = createTool(options);
+        if (typeof options === 'undefined') {
+            return this;
         }
+
+        var toolElement = createTool(options);
 
         if (typeof this.parent === 'function') {
             // wraps functions appendTo, insertAfter, insertBefore, prependTo,
@@ -533,7 +535,7 @@
             }
         }
 
-        return this;
+        return toolElement;
     };
 
     //
