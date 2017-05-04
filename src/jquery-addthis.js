@@ -35,24 +35,6 @@
         share: {}
     };
 
-    function plugin(parent) {
-        this.parent = parent;
-        this._name = pluginName;
-        this.load = load;
-        this.layers_refresh = layers_refresh;
-        this.config = config;
-        this.share = share;
-        this.shareUrl = shareUrl;
-        this.shareTitle = shareTitle;
-        this.shareDescription = shareDescription;
-        this.shareMedia = shareMedia;
-        this.twitterVia = twitterVia;
-        this.urlShortening = urlShortening;
-        this.tool = tool;
-        this.defaults = defaults;
-        this.current = settings;
-    };
-
     /**
      * @method "jQuery.addthis().load"
      * @public
@@ -409,7 +391,7 @@
             var result = oldFunction.apply(this, arguments);
             layers_refresh();
             return result;
-        }
+        };
 
         return newFunction;
     };
@@ -422,17 +404,31 @@
         element.replaceAll = wrapDomManipulationFunction(element.replaceAll);
     };
 
-    var changeDataAttrOnToolFunctions = function(destinationElement, changedElement) {
-        destinationElement.shareUrl = elementChangeShareAttrForBoostTool('url', changedElement);
-        destinationElement.shareTitle = elementChangeShareAttrForBoostTool('title', changedElement);
-        destinationElement.shareDescription = elementChangeShareAttrForBoostTool('description', changedElement);
-        destinationElement.shareMedia = elementChangeShareAttrForBoostTool('media', changedElement);
+    var createNewElementForBoostTools = function(options) {
+        var newElements = $('<div></div>');
+        if (typeof options.tool === 'string') {
+            newElements.addClass(options.tool);
+        }
+        if (typeof options.title === 'string') {
+            newElements.attr('data-title', options.title);
+        }
+        if (typeof options.url === 'string') {
+            newElements.attr('data-url', options.url);
+        }
+        if (typeof options.media === 'string') {
+            newElements.attr('data-media', options.media);
+        }
+        if (typeof options.description === 'string') {
+            newElements.attr('data-description', options.description);
+        }
+
+        return newElements;
     };
 
     var elementChangeShareAttrForBoostTool = function(attr, element) {
         return function (newValue) {
-            var oldToolElement = $(element.children(":first")[0]);
-            var options = { tool: oldToolElement.class };
+            var oldToolElement = $(element.children(':first')[0]);
+            var options = { tool: oldToolElement.className };
 
             if (typeof oldToolElement.attr('class') !== 'undefined') {
                 options.tool = oldToolElement.attr('class');
@@ -466,25 +462,11 @@
         };
     };
 
-    var createNewElementForBoostTools = function(options) {
-        var newElements = $('<div></div>');
-        if (typeof options.tool === 'string') {
-            newElements.addClass(options.tool);
-        }
-        if (typeof options.title === 'string') {
-            newElements.attr('data-title', options.title);
-        }
-        if (typeof options.url === 'string') {
-            newElements.attr('data-url', options.url);
-        }
-        if (typeof options.media === 'string') {
-            newElements.attr('data-media', options.media);
-        }
-        if (typeof options.description === 'string') {
-            newElements.attr('data-description', options.description);
-        }
-
-        return newElements;
+    var changeDataAttrOnToolFunctions = function(destinationElement, changedElement) {
+        destinationElement.shareUrl = elementChangeShareAttrForBoostTool('url', changedElement);
+        destinationElement.shareTitle = elementChangeShareAttrForBoostTool('title', changedElement);
+        destinationElement.shareDescription = elementChangeShareAttrForBoostTool('description', changedElement);
+        destinationElement.shareMedia = elementChangeShareAttrForBoostTool('media', changedElement);
     };
 
     var parentClass = 'addthis-tool-parent-class';
@@ -537,6 +519,24 @@
         return toolElement;
     };
 
+    function plugin(parent) {
+        this.parent = parent;
+        this._name = pluginName;
+        this.load = load;
+        this.layers_refresh = layers_refresh;
+        this.config = config;
+        this.share = share;
+        this.shareUrl = shareUrl;
+        this.shareTitle = shareTitle;
+        this.shareDescription = shareDescription;
+        this.shareMedia = shareMedia;
+        this.twitterVia = twitterVia;
+        this.urlShortening = urlShortening;
+        this.tool = tool;
+        this.defaults = defaults;
+        this.current = settings;
+    }
+
     //
     // bootstrap addthis_config & addthis_share
     //
@@ -585,11 +585,11 @@
 
     $[pluginName] = function() {
         return new plugin(this);
-    }
+    };
 
     $.fn[pluginName] = function() {
         return new plugin(this);
-    }
+    };
 
 })(jQuery, window, document);
 

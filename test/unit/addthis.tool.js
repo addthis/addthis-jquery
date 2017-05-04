@@ -12,7 +12,7 @@ describe('$.addthis().tool', function() {
         title: 'My awesome page',
         url: 'http://addthis.com',
         media: 'http://addthis.com/img.png',
-        description: 'A description of my awesome page',
+        description: 'A description of my awesome page'
     };
 
     var toolConfig2 = {
@@ -262,7 +262,7 @@ describe('$.fn.addthis().tool', function() {
         title: 'My awesome page',
         url: 'http://addthis.com',
         media: 'http://addthis.com/img.png',
-        description: 'A description of my awesome page',
+        description: 'A description of my awesome page'
     };
 
     var toolConfig2 = {
