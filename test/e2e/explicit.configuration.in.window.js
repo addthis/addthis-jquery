@@ -33,7 +33,23 @@ describe('with explicit configuration', function() {
 
     beforeEach(function(){
         fixture.setBase('test/fixtures');
-        fixture.load('X.explicit.configuration.html');
+
+        fixture.load('1no.explicit.configuration.html');
+
+            window.addthis_plugin_info = 'foo';
+
+            window.addthis_share = {
+                bar: 'baz',
+                title: 'hello world',
+                url: 'https://www.addthis.com',
+                description: 'this is a description',
+                media: 'https://www.addthis.com/img/png'
+            };
+
+            window.addthis_config = {
+                addthis: 'rocks'
+            };
+
     });
 
     describe('before more javascript loads', function() {
