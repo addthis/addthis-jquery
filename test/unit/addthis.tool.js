@@ -250,7 +250,6 @@ describe('$.addthis().tool', function() {
     });
 });
 
-
 describe('$.fn.addthis().tool', function() {
     var testConfigs1 = {
         'foo': 'bar'

@@ -1,7 +1,7 @@
 //var webdriverio = require('webdriverio');
 
 describe('$.addthis().shareUrl', function() {
-   var $;
+    var $;
 
     beforeEach(function(done) {
         fixture.setBase('test/fixtures');

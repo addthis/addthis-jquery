@@ -130,7 +130,6 @@
         };
 
         settings.layers_refresh._intervalId = window.setInterval(checkAndRun, 100);
-
         return $;
     };
 
@@ -482,23 +481,13 @@
     };
 
     var tool = function(options) {
-        if (typeof options === 'undefined') {
+        if (typeof options !== 'object') {
             return this;
         }
 
         var toolElement = createTool(options);
 
-        if (typeof this.parent === 'function') {
-            // wraps functions appendTo, insertAfter, insertBefore, prependTo,
-            // replaceAll to call addthis.layers.refresh after DOM manipulation
-            reDefineDOMManipulationFunctions(toolElement);
-            // adds functions shareUrl, shareTitle, shareDescription, shareMedia
-            // onto the element in the second param to change attrs data-url,
-            // data-title, data-description, data-media on the addthis tool in the
-            // second param
-            changeDataAttrOnToolFunctions(toolElement, toolElement);
-            return toolElement;
-        } else if (typeof this.parent === 'object' &&
+        if (typeof this.parent === 'object' &&
             typeof options.method !== 'undefined' &&
             typeof this.parent[options.method] === 'function'
         ) {
@@ -515,6 +504,15 @@
 
             return this.parent;
         }
+
+        // wraps functions appendTo, insertAfter, insertBefore, prependTo,
+        // replaceAll to call addthis.layers.refresh after DOM manipulation
+        reDefineDOMManipulationFunctions(toolElement);
+        // adds functions shareUrl, shareTitle, shareDescription, shareMedia
+        // onto the element in the second param to change attrs data-url,
+        // data-title, data-description, data-media on the addthis tool in the
+        // second param
+        changeDataAttrOnToolFunctions(toolElement, toolElement);
 
         return toolElement;
     };
@@ -554,7 +552,6 @@
         // the module and window.addthis_config looks right on page and has
         // something in it use it
         settings.share = $.extend({}, window.addthis_share);
-
         if (typeof window.addthis === 'undefined') {
             /**
              * Only hold onto url, title, description, media values if
