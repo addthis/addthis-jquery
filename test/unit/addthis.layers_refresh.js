@@ -51,8 +51,7 @@ describe('$.addthis().layers_refresh', function() {
         expect($.addthis().current.layers_refresh._intervalId).toBe(false);
     });
 
-
-    it('should set up an interval if window.addthis.layers.refresh is defined', function() {
+    it('should set up an interval if window.addthis.layers.refresh is defined', function(done) {
         expect($.addthis().current.layers_refresh._intervalId).toBe(false);
         window.addthis = {
             layers: {
@@ -63,9 +62,12 @@ describe('$.addthis().layers_refresh', function() {
 
         $.addthis().layers_refresh();
         expect($.addthis().current.layers_refresh._intervalId).not.toBe(false);
+
+        // let the triggered events finish off else the test fails ¯\_(ツ)_/¯
+        setTimeout(done, 601);
     });
 
-    it('does not set up a new interval when one is already setup', function() {
+    it('does not set up a new interval when one is already setup', function(done) {
         window.addthis = {
             layers: {
                 lastViewRegistered: 0,
@@ -78,6 +80,9 @@ describe('$.addthis().layers_refresh', function() {
         var firstIntervalId = $.addthis().current.layers_refresh._intervalId;
         $.addthis().layers_refresh();
         expect($.addthis().current.layers_refresh._intervalId).toBe(firstIntervalId);
+
+        // let the triggered events finish off else the test fails ¯\_(ツ)_/¯
+        setTimeout(done, 601);
     });
 
     it('updates timestamp when run again', function(done) {
@@ -93,7 +98,8 @@ describe('$.addthis().layers_refresh', function() {
         window.setTimeout(function() {
             $.addthis().layers_refresh();
             expect($.addthis().current.layers_refresh._lastTs).not.toBe(firstTs);
-            done();
+            // let the triggered events finish off else the test fails ¯\_(ツ)_/¯
+            setTimeout(done, 601);
         }, 1);
     });
 
@@ -129,7 +135,8 @@ describe('$.addthis().layers_refresh', function() {
         window.setTimeout(function() {
             expect(window.addthis.layers.refresh.calls.count()).toEqual(1);
             expect(addthisPlugin.layers_refresh.calls.count()).toEqual(2);
-            done();
+            // let the triggered events finish off else the test fails ¯\_(ツ)_/¯
+            setTimeout(done, 601);
         }, 251);
     });
 
@@ -156,7 +163,8 @@ describe('$.addthis().layers_refresh', function() {
         window.setTimeout(function() {
             expect(window.addthis.layers.refresh.calls.count()).toEqual(1);
             expect(addthisPlugin.current.layers_refresh._intervalId).toBe(false);
-            done();
+            // let the triggered events finish off else the test fails ¯\_(ツ)_/¯
+            setTimeout(done, 601);
         }, 101);
     });
 });
