@@ -41,7 +41,15 @@
      * @description
      * Executes a callback once addthis_widget.js has loaded and AddThis tools
      * are ready to use.
+     * For example, one might want to use this if they are defining the tools
+     * they want on the page using
+     * <a href="https://www.addthis.com/academy/smart-layers-api/" target="_blank">SmartLayers</a>
+     * instead of on their AddThis account.
      *
+     * @example
+jQuery.addthis().load(function() {
+    window.addthis.layers({share: {}});
+});
      * @param {function} callback The function to execute once addthis_widget.js
      *     has loaded and AddThis tools are ready to use. No paramaters are
      *     passed to it.
@@ -76,14 +84,36 @@
      * @method "jQuery.addthis().layers_refresh"
      * @access public
      * @description
-     * Checks if `addthis_widget.js` is loaded yet and whether SmartLayers has
-     * initialized. If not, there's no need to bother with
-     * `addthis.layers.refresh`. If present, creates an interval of 100ms
-     * 100ms to make sure more refresh requests aren't coming still coming in
-     * from the app. If no more refresh requests have come in 100ms, and
-     * refresh hasn't been called in 500ms, `addthis.layers.refresh` is
-     * executed. FYI: AddThis SmartLayers API will ignore calls to
-     * `addthis.layers.refresh` if it's been called already within 500ms.
+     * <p>
+     * This only needs to be used if adding HTML elements for AddThis
+     * tools without using jQuery.addthis().tool() or if using
+     * jQuery.addthis().tool() and adding the returned tool onto an element
+     * currently detatched from the DOM. In either case, after adding the
+     * element onto the DOM, call jQuery.addthis().layers_refresh manually or
+     * AddThis tools may not be added to the new element.
+     * </p>
+     *
+     * <p>
+     * This functions checks if AddThis' addthis_widget.js JavaScript file is
+     * loaded yet and whether AddThis SmartLayers has initialized. If not,
+     * there's no need to bother with addthis.layers.refresh and it's not
+     * called. Otherwise, it creates an interval of 100ms to make catch any
+     * subsequent calls. If no more refresh requests have come in 100ms, and
+     * addthis.layers.refresh hasn't been called in 500ms,
+     * addthis.layers.refresh is executed. The AddThis SmartLayers API will
+     * ignore calls to addthis.layers.refresh if it's been called in the last
+     * 500ms.
+     * </p>
+     * @example
+var newElementIWantToolsIn = $('<div class="foo-bar"></div>');
+newElementIWantToolsIn.addthis().tool({
+    tool: 'addthis_inline_share_toolbox_m90v',
+    method: 'append' // or ...
+});
+
+var someOtherElements = $('.my-div-where-i-want-addthis-tools')
+  .append(newElementIWantToolsIn);
+jQuery.addthis().layers_refresh();
      * @return {jQuery} the jQuery function
      **/
     var layers_refresh = function() {
@@ -109,7 +139,8 @@
          * @access private
          * @description
          * Callback for checking in an interval whether addthis.layers.refresh
-         * can be called now
+         * can be called now (exists and hasn't run in at least 500ms), and if
+         * so, calls it.
          * @callback checkAndRun
          */
         var checkAndRun = function() {
@@ -136,9 +167,17 @@
     /**
      * @method "jQuery.addthis().config"
      * @access public
-     * @param {object} options AddThis configuration object. See
-     *   <a href="https://www.addthis.com/academy/the-addthis_config-variable/" target="_blank">
-     *   the addthis_config variable documentation</a> for options.
+     * @description
+     * Sets values in the window.addthis_config variable and triggers AddThis
+     * refresh to put the new settings to use. See
+     * <a href="https://www.addthis.com/academy/the-addthis_config-variable/" target="_blank">
+     * the addthis_config variable documentation</a> for options.
+     * @example
+jQuery.addthis().config({
+    ui_tabindex: 1,
+    ui_language: 'en
+});
+     * @param {object} options AddThis configuration object.
      * @return {jQuery} the jQuery function
      **/
     var config = function(options) {
@@ -160,9 +199,17 @@
     /**
      * @method "jQuery.addthis().share"
      * @access public
-     * @param {object} options AddThis sharing options. See
-     *   <a href="https://www.addthis.com/academy/the-addthis_share-variable/"" target="_blank">
-     *   the addthis_share variable documentation</a> for options.
+     * @description
+     * Sets values in the window.addthis_share variable and triggers AddThis
+     * refresh to put the new settings to use. See
+     * <a href="https://www.addthis.com/academy/the-addthis_share-variable/"" target="_blank">
+     * the addthis_share variable documentation</a> for options.
+     * @example
+jQuery.addthis().share({
+    title: 'My awesome page',
+    url: 'http://addthis.com',
+});
+     * @param {object} options AddThis sharing object.
      * @return {jQuery} the jQuery function
      **/
     var share = function(options) {
@@ -192,14 +239,19 @@
      * @method "jQuery.addthis().shareUrl"
      * @access public
      * @description
-     * This is a shortcut to setting the URL through
-     * `$.addthis().share({'url': 'http://example.com'})`. Sets the URL
-     * shared by tools that don't explicitly set one.
+     * <p>
+     * This is a shortcut to setting the URL. Sets the URL
+     * shared by tools that don't explicitly set one. To set this along with
+     * other share variables at once, use jQuery.addthis().share
+     * instead.
+     * </p>
      *
-     * To reset to default, set to `false`.
+     * <p>
+     * To reset to default, set to false.
+     * </p>
      *
      * @example $.addthis().shareUrl('https://www.addthis.com');
-     *
+     * @example $.addthis().shareUrl(false);
      * @param {string} url the url to be used when clicking on a share button
      *   that doesn't speicfy its share url
      * @return {jQuery} the jQuery function
@@ -215,22 +267,29 @@
      * @method "jQuery.addthis().shareTitle"
      * @access public
      * @description
-     * This is a shortcut to setting the title through
-     * `$.addthis().share({'title': 'Check this out!'})`. Sets the title
-     * shared by tools that don't explicitly set one.
+     * <p>
+     * This is a shortcut to setting the share title. Sets the title shared by
+     * tools that don't explicitly set one. To set this along with other share
+     * variables at once, use jQuery.addthis().share instead.
+     * </p>
      *
-     * To reset to default, set to `false`.
+     * <p>
+     * To reset to default, set to false.
+     * </p>
      *
-     * Note: Some services (such as Facebook) do not allow you to define
-     * the share title for a URL this way. Facebook will always use the
-     * Open Graph tags it finds on the page when it crawls it. You can
-     * use the <a href="https://developers.facebook.com/tools/debug/">
-     * Facebook Sharing Debugger</a> to test your Open Graph tags.
+     * <p>
+     * <strong>Note</strong>: Some services (such as Facebook) do not allow one
+     * to define the share title for a URL this way. Facebook will always
+     * use the Open Graph tags it finds on the page when it crawls it. You can
+     * use the
+     * <a href="https://developers.facebook.com/tools/debug/">
+     * Facebook Sharing Debugger</a> to test a page's Open Graph tags.
+     * </p>
      *
      * @example $.addthis().shareTitle('Check this out!');
-     *
-     * @param {string} title the title to be used when clicking on a share button
-     *   that doesn't speicfy its share title
+     * @example $.addthis().shareTitle(false);
+     * @param {string} title the title to be used when clicking on a share
+     *   button that doesn't speicfy its share title
      * @return {jQuery} the jQuery function
      **/
     var shareTitle = function(title) {
@@ -244,21 +303,28 @@
      * @method "jQuery.addthis().shareDescription"
      * @access public
      * @description
-     * This is a shortcut to setting the description through
-     * `$addthis.share({'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'})`\
-     * . Sets the description shared by tools that don't explicitly set
-     * one.
+     * <p>
+     * This is a shortcut to setting the description. Sets the description
+     * shared by tools that don't explicitly set one. To set this along with
+     * other share variables at once, use jQuery.addthis().share
+     * instead.
+     * </p>
      *
-     * To reset to default, set to `false`.
+     * <p>
+     * To reset to default, set to false.
+     * </p>
      *
-     * Note: Some services (such as Facebook) do not allow you to define
-     * the share description for a URL this way. Facebook will always
-     * use the Open Graph tags it finds on the page when it crawls it.
-     * You can use the
+     * <p>
+     * <strong>Note</strong>: Some services (such as Facebook) do not allow one
+     * to define the share description for a URL this way. Facebook will always
+     * use the Open Graph tags it finds on the page when it crawls it. You can
+     * use the
      * <a href="https://developers.facebook.com/tools/debug/">
-     * Facebook Sharing Debugger</a> to test your Open Graph tags.
+     * Facebook Sharing Debugger</a> to test a page's Open Graph tags.
+     * </p>
      *
-     * @example $.addthis().shareDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+     * @example $.addthis().shareDescription('Lorem ipsum');
+     * @example $.addthis().shareDescription(false);
      *
      * @param {string} description the description to be used when clicking on a
      *   share button that doesn't speicfy its share description
@@ -275,20 +341,27 @@
      * @method "jQuery.addthis().shareMedia"
      * @access public
      * @description
-     * This is a shortcut to setting the image through
-     * `$addthis.share({'shareMedia': 'http://example.com/img.png'})`.
-     * Sets the image shared by tools that don't explicitly set one.
+     * <p>
+     * This is a shortcut to setting the share image. Sets the image shared by
+     * tools that don't explicitly set one. To set this along with other share
+     * variables at once, use jQuery.addthis().share instead.
+     * </p>
      *
-     * To reset to default, set to `false`.
+     * <p>
+     * To reset to default, set to false.
+     * </p>
      *
-     * Note: Some services (such as Facebook) do not allow you to define
-     * the share image for a URL this way. Facebook will always use the
-     * Open Graph tags it finds on the page when it crawls it. You can
-     * use the <a href="https://developers.facebook.com/tools/debug/">
-     * Facebook Sharing Debugger</a> to test your Open Graph tags.
+     * <p>
+     * <strong>Note</strong>: Some services (such as Facebook) do not allow one
+     * to define the share image for a URL this way. Facebook will always
+     * use the Open Graph tags it finds on the page when it crawls it. You can
+     * use the
+     * <a href="https://developers.facebook.com/tools/debug/">
+     * Facebook Sharing Debugger</a> to test a page's Open Graph tags.
+     * </p>
      *
      * @example $.addthis().shareMedia('http://example.com/img.png');
-     *
+     * @example $.addthis().shareMedia(false);
      * @param {string} media the image url to be used when clicking on a share
      *   button that doesn't speicfy its share image url
      * @return {jQuery} the jQuery function
@@ -300,6 +373,13 @@
         return $;
     };
 
+    /**
+     * @method twitterViaHelper
+     * @access private
+     * @description
+     * A helper function for manipulating the Twitter via configuration settings
+     * @ignore
+     **/
     var twitterViaHelper = function(handle, shareConfig) {
         if (typeof handle === 'string' && handle.length > 0) {
             if (typeof shareConfig.passthrough === 'undefined') {
@@ -322,9 +402,9 @@
      * @method "jQuery.addthis().twitterVia"
      * @access public
      * @description
-     * Takes a twitter handle/username and uses it for twitter via. See
+     * Takes a Twitter handle/username and uses it for Twitter via. See
      * https://www.addthis.com/academy/changes-to-how-twitter-works-with-addthis/
-     * for more information
+     * for more information.
      *
      * @param {string|false} the twitter handle in a string or false to remove
      * twitter handle from config
@@ -344,6 +424,9 @@
     /**
      * @method urlShorteningHelper
      * @access private
+     * @description
+     * A helper function for manipulating the share configuration settings
+     * specifically for URL shorteners.
      * @ignore
      **/
     var urlShorteningHelper = function(urlShorteningService, socialService, shareConfig) {
@@ -385,6 +468,15 @@
         return $;
     };
 
+    /**
+     * @method wrapDomManipulationFunction
+     * @access private
+     * @description
+     * Creates the functions that replace appendTo, insertAfter, insertBefore,
+     * prependTo and replaceAll to make sure AddThis is told to refresh after
+     * relevant DOM changes.
+     * @ignore
+     **/
     var wrapDomManipulationFunction = function(oldFunction) {
         var newFunction = function() {
             var result = oldFunction.apply(this, arguments);
@@ -395,6 +487,15 @@
         return newFunction;
     };
 
+    /**
+     * @method reDefineDOMManipulationFunctions
+     * @access private
+     * @description
+     * Replaces the stock appendTo, insertAfter, insertBefore, prependTo and
+     * replaceAll functions on the passed element and replaces them with wrapped
+     * version from wrapDomManipulationFunction
+     * @ignore
+     **/
     var reDefineDOMManipulationFunctions = function(element) {
         element.appendTo = wrapDomManipulationFunction(element.appendTo);
         element.insertAfter = wrapDomManipulationFunction(element.insertAfter);
@@ -403,6 +504,13 @@
         element.replaceAll = wrapDomManipulationFunction(element.replaceAll);
     };
 
+    /**
+     * @method createNewElementForBoostTools
+     * @access private
+     * @description
+     * Creates an AddThis element based off the passed options
+     * @ignore
+     **/
     var createNewElementForBoostTools = function(options) {
         var newElements = $('<div></div>');
         if (typeof options.tool === 'string') {
@@ -424,6 +532,15 @@
         return newElements;
     };
 
+    /**
+     * @method elementChangeShareAttrForBoostTool
+     * @access private
+     * @description
+     * Creates a function for a given AddThis element for changing a given
+     * attribute. This builds all the element specific shareTitle, shareUrl,
+     * shareDescription and shareMedia functions.
+     * @ignore
+     **/
     var elementChangeShareAttrForBoostTool = function(attr, element) {
         return function (newValue) {
             var oldToolElement = $(element.children(':first')[0]);
@@ -461,6 +578,14 @@
         };
     };
 
+    /**
+     * @method changeDataAttrOnToolFunctions
+     * @access private
+     * @description
+     * Adds shareTitle, shareUrl, shareDescription and shareMedia functions onto
+     * destinationElement that change attributes for the changedElement.
+     * @ignore
+     **/
     var changeDataAttrOnToolFunctions = function(destinationElement, changedElement) {
         destinationElement.shareUrl = elementChangeShareAttrForBoostTool('url', changedElement);
         destinationElement.shareTitle = elementChangeShareAttrForBoostTool('title', changedElement);
@@ -469,7 +594,14 @@
     };
 
     var parentClass = 'addthis-tool-parent-class';
-    // creates a div with a addthis tool in it based on input options
+
+    /**
+     * @method createTool
+     * @access private
+     * @description
+     * Creates a div with an AddThis tool in it.
+     * @ignore
+     **/
     var createTool = function(options) {
         var toolElement = createNewElementForBoostTools(options);
 
@@ -480,6 +612,69 @@
         return parentElement;
     };
 
+    /**
+     * @method "jQuery.addthis().tool"
+     * @access public
+     * @description
+     * <p>
+     * Creates an element for an inline AddThis tool that can be added onto
+     * the page.
+     * </p>
+     *
+     * <p>
+     * There are three ways to use this function.
+     * </p>
+     * <ol>
+     * <li>
+     * Add that object onto the page using appendTo, prependTo, insertAfter,
+     * insertBefore, or replaceAll off the returned object. Illustrated in the
+     * first example below.
+     * </li>
+     * <li>
+     * Call .addthis().tool off of any jQuery object for an element that is
+     * already in the DOM (not something detatched from the DOM) and specify
+     * how the AddThis tool should be added onto that element using the method
+     * property. The value for this property can be 'append', 'prepend', 'after'
+     * or 'before'. Illustrated in the second example below.
+     * </li>
+     * <li>
+     * Use either option 1 or 2 above on an element detached from the DOM. Once
+     * the relevant item is attched to the DOM, execute
+     * jQuery.addthis().layers_refresh(). See the documentation for
+     * jQuery.addthis().layers_refresh for examples and more information.
+     * </li>
+     * </ol>
+     * @example
+var addthisToolConfig1 = {
+    tool: 'addthis_inline_share_toolbox_m90v',
+    title: 'My awesome page',
+    url: 'http://addthis.com',
+    media: 'http://addthis.com/img.png',
+    description: 'A description of my awesome page'
+};
+
+$.addthis()
+    .tool(addthisToolConfig1)
+    .appendTo('.my-div-where-i-want-addthis-tools');
+     * @example
+var addthisToolConfig2 = {
+    tool: 'addthis_inline_share_toolbox_m90v',
+    title: 'My awesome page',
+    url: 'http://addthis.com',
+    media: 'http://addthis.com/img.png',
+    description: 'A description of my awesome page',
+    method: 'append'
+};
+
+$('.my-div-where-i-want-addthis-tools')
+    .$addthis()
+    .tool(addthisToolConfig2);
+     * @param {object} options An object with the property tool and optionally
+     * the properties title, url, media, description and method.
+     * @return {addthis} An AddThis jQuery plugin object, which looks just like
+     * a jQuery element plugin with a coupld additional functions: shareUrl,
+     * shareTitle, shareDescription and shareMedia.
+     **/
     var tool = function(options) {
         if (typeof options !== 'object') {
             return this;
@@ -580,6 +775,13 @@
         window.addthis_share = $.extend({}, settings.share);
     }
 
+    /**
+     * @method "jQuery.addthis"
+     * @access public
+     * @description
+     * Creates and returns an object that can be used to create AddThis tools
+     * or change settings for AddThis tools already on the page.
+     */
     $[pluginName] = function() {
         return new plugin(this);
     };
@@ -591,8 +793,8 @@
 })(jQuery, window, document);
 
 /**
-* The jQuery plugin namespace.
-* @external "jQuery"
-* @access public
-* @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
-*/
+ * The jQuery plugin namespace.
+ * @external jQuery
+ * @access public
+ * @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
+ */
