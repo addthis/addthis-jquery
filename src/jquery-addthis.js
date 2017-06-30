@@ -775,6 +775,7 @@ $('.my-div-where-i-want-addthis-tools')
         window.addthis_share = $.extend({}, settings.share);
     }
 
+    var pluginSingleton;
     /**
      * @method "jQuery.addthis"
      * @access public
@@ -783,7 +784,10 @@ $('.my-div-where-i-want-addthis-tools')
      * or change settings for AddThis tools already on the page.
      */
     $[pluginName] = function() {
-        return new plugin(this);
+        if (!pluginSingleton) {
+            pluginSingleton = new plugin(this);
+        }
+        return pluginSingleton;
     };
 
     $.fn[pluginName] = function() {
