@@ -69,11 +69,6 @@
         </button>
 
         <script>
-            var addthisToolConfig1 = {
-                tool: 'addthis_inline_share_toolbox_ipi2',
-                method: 'append'
-            };
-
             var queuedIpsums = [
                 {
                     'name': 'Bacon Ipsum',
@@ -125,8 +120,16 @@
             function addAnotherIpsum() {
                 if (queuedIpsums.length > 0) {
                     var newIpsumeContent = queuedIpsums.pop();
+
+                    var addthisToolConfig = {
+                        tool: 'addthis_inline_share_toolbox_ipi2',
+                        url: newIpsumeContent.source,
+                        title: newIpsumeContent.name,
+                        method: 'append'
+                    };
+
                     var newIpsumElement = $('<div><h3>' + newIpsumeContent.name + ' <small><a href="' + newIpsumeContent.source + '">source</a></small></h3><p>' + newIpsumeContent.text + '</p></div>');
-                    newIpsumElement.addthis().tool(addthisToolConfig1);
+                    newIpsumElement.addthis().tool(addthisToolConfig);
                     newIpsumElement.appendTo('#ipsumContainer');
                 }
 
