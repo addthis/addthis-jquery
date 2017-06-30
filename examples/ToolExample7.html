@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>
+            AddThis jQuery Plugin Example Code
+        </title>
+        <script src="../../node_modules/jquery/dist/jquery.js"></script>
+        <script src="../../dist/jquery-addthis.js"></script>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-593dce7ba1919f85"></script>
+        <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"></link>
+
+        <style>
+            body {
+                padding: 30px 30px 30px 60px;
+            }
+            .catgif {
+                padding: 10px;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-faded">
+            <a class="navbar-brand" href="#">jquery-addthis</a>
+
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html">List of Tool Examples</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav float-xs-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://wwww.addthis.com">AddThis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../docs/index.html">Documentation</a>
+                </li>
+                <!--
+                <li class="nav-item">
+                    <a class="nav-link" href="#">GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">NPM</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Bower</a>
+                </li>
+                -->
+            </ul>
+
+        </nav>
+
+        <h1>
+            AddThis jQuery Plugin Example Site
+        </h1>
+        <h2>
+            Tool Example 7
+            <small>
+                Related Posts
+            </small>
+        </h2>
+
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            If enabled, Related Post tools will show up on your site <em>after</em> AddThis has crawled your site and put together a list of items to recommend. It can take up to 24 hours for AddThis to crawl your site <em>after</em> adding AddThis tools onto a live site. If you are still having issues seeing related post tools 24 hours after adding AddThis tool onto a live site you can reach out to the AddThis Support team at <a href="mailto:help@addthis.com">help@addthis.com</a>
+        </div>
+
+        <div class="my-div-where-i-want-addthis-tools"></div>
+
+        <script>
+            var toolDivSelector = '.my-div-where-i-want-addthis-tools';
+
+            var addthisToolConfig1 = {
+                tool: 'addthis_relatedposts_inline',
+            };
+
+            $.addthis().tool(addthisToolConfig1)
+                .appendTo(toolDivSelector);
+        </script>
+
+    </body>
+</html>

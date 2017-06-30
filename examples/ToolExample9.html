@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <title>
+            AddThis jQuery Plugin Example Code
+        </title>
+        <script src="../../node_modules/jquery/dist/jquery.js"></script>
+        <script src="../../dist/jquery-addthis.js"></script>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-593dce7ba1919f85"></script>
+        <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"></link>
+
+        <style>
+            body {
+                padding: 30px 30px 30px 60px;
+            }
+            .catgif {
+                padding: 10px;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-faded">
+            <a class="navbar-brand" href="#">jquery-addthis</a>
+
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html">List of Tool Examples</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav float-xs-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://wwww.addthis.com">AddThis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../docs/index.html">Documentation</a>
+                </li>
+                <!--
+                <li class="nav-item">
+                    <a class="nav-link" href="#">GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">NPM</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Bower</a>
+                </li>
+                -->
+            </ul>
+
+        </nav>
+
+        <h1>
+            AddThis jQuery Plugin Example Site
+        </h1>
+        <h2>
+            Tool Example 9
+            <small>
+                image sharing tool with new images on page
+            </small>
+        </h2>
+
+        <p>Images via <a href="http://thecatapi.com/">The Cat Api</a></p>
+
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            Share buttons will only appear on images that are at least 200px by 200px. The images used below are random. Some may not be big enough to have share buttons.
+        </div>
+
+        <div id='catGifContainer'>
+        </div>
+
+        <button type="button" class="btn btn-primary" id='addCat'>
+            Add Another Image
+        </button>
+
+        <script>
+            var imageQueue = [];
+
+            function addAnotherCat() {
+                if (imageQueue.length === 0) {
+                    getMoreImages(addAnotherCat);
+                } else {
+                    // add a cat image
+                    var url = imageQueue.pop();
+                    $('<div><img class="img-thumbnail catgif" alt="a random cat gif" src="' + url + '"></img></div>').appendTo('#catGifContainer');
+                }
+            }
+
+            function getMoreImages(callback) {
+                $.ajax({
+                    url: 'https://thecatapi.com/api/images/get',
+                    data: {
+                        format: 'xml',
+                        results_per_page: '20',
+                        type: 'gif',
+                        size: 'med'
+                    }
+                }).done(function(data) {
+                    var images = data.documentElement.getElementsByTagName('url');
+                    images = Array.prototype.slice.call(images);
+                    images.forEach(function(image) {
+                        imageQueue.push(image.innerHTML);
+                    });
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            }
+
+            addAnotherCat();
+            $('button#addCat').click(addAnotherCat);
+        </script>
+    </body>
+</html>
