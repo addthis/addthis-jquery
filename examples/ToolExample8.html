@@ -69,6 +69,7 @@
         </button>
 
         <script>
+            // and array of objects with a name, source and sample Lorem Ipsum
             var queuedIpsums = [
                 {
                     'name': 'Bacon Ipsum',
@@ -117,28 +118,39 @@
                 }
             ];
 
+            // function for adding another Lorem Ipsum example to the page
             function addAnotherIpsum() {
                 if (queuedIpsums.length > 0) {
                     var newIpsumeContent = queuedIpsums.pop();
 
+                    // configuration for AddThis tool
                     var addthisToolConfig = {
                         tool: 'addthis_inline_share_toolbox_ipi2',
+                        // share the URL for the Lorem Ipsum generator, not the current page
                         url: newIpsumeContent.source,
+                        // share the name for the Lorem Ipsum generator, not the current page title
                         title: newIpsumeContent.name,
+                        // automatically append tool onto selected jQuery element
                         method: 'append'
                     };
 
+                    // create div for Lorem Ipsum sample with name, link to source and sample text
                     var newIpsumElement = $('<div><h3>' + newIpsumeContent.name + ' <small><a href="' + newIpsumeContent.source + '">source</a></small></h3><p>' + newIpsumeContent.text + '</p></div>');
+                    // create element for AddThis tool -- it automatically appends onto newIpsumElement because of the method property in the configs
                     newIpsumElement.addthis().tool(addthisToolConfig);
+                    // append new Lorem Ipsume example to ipsumContainer div
                     newIpsumElement.appendTo('#ipsumContainer');
                 }
 
                 if (queuedIpsums.length === 0) {
+                    // if we're out of Lorem Ipsume examples, hide the button
                     $('button#addIpsum').hide();
                 }
             }
 
+            // bootstrap by adding first Lorem Ipsume examples onto the page
             addAnotherIpsum();
+            // call addAnotherIpsum function whenever someone clicks on the button
             $('button#addIpsum').click(addAnotherIpsum);
         </script>
     </body>
