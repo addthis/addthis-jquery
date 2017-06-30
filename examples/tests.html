@@ -13,10 +13,6 @@
             body {
                 padding: 30px 30px 30px 60px;
             }
-            .catgif {
-                padding: 10px;
-                margin: 10px;
-            }
         </style>
     </head>
     <body>
@@ -34,7 +30,7 @@
                     <a class="nav-link" href="https://www.addthis.com">AddThis</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../docs/index.html">Documentation</a>
+                    <a class="nav-link" href="#">Documentation</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./tests.html">Test Results</a>
@@ -55,36 +51,23 @@
         </nav>
 
         <h1>
-            AddThis jQuery Plugin Example Site
+            AddThis jQuery Plugin Test Results
         </h1>
-        <h2>
-            Tool Example 7
-            <small>
-                Related Posts
-            </small>
-        </h2>
-
-        <div class="alert alert-info" role="alert">
-            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-            If enabled, Related Post tools will show up on your site <em>after</em> AddThis has crawled your site and put together a list of items to recommend. It can take up to 24 hours for AddThis to crawl your site <em>after</em> adding AddThis tools onto a live site. If you are still having issues seeing related post tools 24 hours after adding AddThis tool onto a live site you can reach out to the AddThis Support team at <a href="mailto:help@addthis.com">help@addthis.com</a>
-        </div>
-
-        <div class="my-div-where-i-want-addthis-tools"></div>
-
-        <script>
-            // the selector for picking out the the div we'll put AddThis tools into
-            var toolDivSelector = '.my-div-where-i-want-addthis-tools';
-
-            // initial configuration for AddThis tool
-            var addthisToolConfig1 = {
-                tool: 'addthis_relatedposts_inline',
-            };
-
-            // create element for AddThis tool
-            $.addthis().tool(addthisToolConfig1)
-                // append element for AddThis tool onto the desired div
-                .appendTo(toolDivSelector);
-        </script>
-
+        <ul>
+            <li> Unit
+                <ul>
+                    <li>
+                        <a href="../test_reports/unit/coverage_html/index.html">Code Coverage</a>
+                    </li>
+                </ul>
+            </li>
+            <li> End to End
+                <ul>
+                    <li>
+                        <a href="../test_reports/e2e/coverage_html/index.html">Code Coverage</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </body>
 </html>
