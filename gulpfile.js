@@ -89,7 +89,7 @@ gulp.task('unit-test', function(done) {
 
 gulp.task('e2e-test', function(done) {
     new karmaServer({
-        configFile: __dirname + '/karma.e2e.conf.js',
+        configFile: __dirname + '/test/karma.e2e.conf.js',
         singleRun: true
     }, done).start();
 });

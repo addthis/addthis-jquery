@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '../',
 
 
     // frameworks to use
@@ -34,12 +34,12 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/**/*.js'             : 'coverage',
-      './test/fixtures/**/*.html' : 'html2js'
+      './src/**/*.js'              : 'coverage',
+      './test/fixtures/**/*.html'  : 'html2js'
     },
 
     coverageReporter: {
-        dir : 'test_reports/e2e/',
+        dir : 'test/reports/e2e/',
         reporters: [
             { type: 'html', subdir: 'coverage_html' },
             { type: 'cobertura', subdir: 'coverage_cobertura' }
@@ -47,7 +47,7 @@ module.exports = function(config) {
     },
 
     htmlReporter: {
-        outputDir: 'test_reports/e2e/bytest_html',
+        outputDir: 'test/reports/e2e/bytest_html',
 
         // Optional
         pageTitle: 'Unit Tests',
@@ -58,7 +58,7 @@ module.exports = function(config) {
     },
 
     junitReporter: {
-      outputDir: './test_reports/e2e/bytest_junit'
+      outputDir: 'test/reports/e2e/bytest_junit'
     },
 
     // test results reporter to use
