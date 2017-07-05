@@ -16,7 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       './test/fixtures/**/*.html',
-      './test/e2e/**/*.js',
+      './test/src/e2e/**/*.js',
       {
         pattern: './node_modules/jquery/dist/jquery.js',
         included: false
