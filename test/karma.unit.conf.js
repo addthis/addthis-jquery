@@ -32,7 +32,7 @@ module.exports = function(config) {
     },
 
     coverageReporter: {
-      dir : 'test_reports/unit/',
+      dir : 'reports/unit/',
       reporters: [
           { type: 'html', subdir: 'coverage_html' },
           { type: 'cobertura', subdir: 'coverage_cobertura' }
@@ -40,7 +40,7 @@ module.exports = function(config) {
     },
 
     htmlReporter: {
-      outputDir: 'test_reports/unit/bytest_html',
+      outputDir: 'test/reports/unit/bytest_html',
 
       // Optional
       pageTitle: 'Unit Tests',
@@ -51,7 +51,7 @@ module.exports = function(config) {
     },
 
     junitReporter: {
-      outputDir: './test_reports/unit/bytest_junit'
+      outputDir: './reports/unit/bytest_junit'
     },
 
 
