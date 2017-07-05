@@ -39,7 +39,7 @@ module.exports = function(config) {
     },
 
     coverageReporter: {
-        dir : 'test/reports/e2e/',
+        dir : 'test/reports/src/e2e/',
         reporters: [
             { type: 'html', subdir: 'coverage_html' },
             { type: 'cobertura', subdir: 'coverage_cobertura' }
@@ -47,7 +47,7 @@ module.exports = function(config) {
     },
 
     htmlReporter: {
-        outputDir: 'test/reports/e2e/bytest_html',
+        outputDir: 'test/reports/src/e2e/bytest_html',
 
         // Optional
         pageTitle: 'Unit Tests',
@@ -58,7 +58,7 @@ module.exports = function(config) {
     },
 
     junitReporter: {
-      outputDir: 'test/reports/e2e/bytest_junit'
+      outputDir: 'test/reports/src/e2e/bytest_junit'
     },
 
     // test results reporter to use
