@@ -74,7 +74,7 @@ gulp.task('build', ['jslint', 'clean-distribution'], function(){
 });
 
 gulp.task('jslint', function() {
-    return gulp.src([path.source, 'test/**/*.js'])
+    return gulp.src([path.source, 'test/src/**/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter(stylish))
         .pipe(jshint.reporter('fail'));
