@@ -4,7 +4,7 @@ describe('empty window.addthis_share and empty window.addthis_config', function(
     var $;
 
     beforeEach(function(done) {
-        fixture.setBase('test/fixtures');
+        fixture.setBase('test/src/fixtures');
         fixture.load('1no.explicit.configuration.html');
 
         window.addthis_share = {};

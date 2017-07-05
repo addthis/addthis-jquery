@@ -4,7 +4,7 @@ describe('$.addthis().config', function() {
     var $;
 
     beforeEach(function(done) {
-        fixture.setBase('test/fixtures');
+        fixture.setBase('test/src/fixtures');
         fixture.load('1no.explicit.configuration.html');
 
         var jqueryScript = document.createElement('script');

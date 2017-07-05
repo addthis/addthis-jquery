@@ -32,7 +32,7 @@ describe('with explicit configuration', function() {
     var media = 'https://www.addthis.com/img/png';
 
     beforeEach(function(){
-        fixture.setBase('test/fixtures');
+        fixture.setBase('test/src/fixtures');
 
         fixture.load('1no.explicit.configuration.html');
 

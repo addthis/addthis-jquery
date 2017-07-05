@@ -4,7 +4,7 @@ describe('if window.addthis is defined when the jQuery plugin loads', function()
     var $;
 
     beforeEach(function(done) {
-        fixture.setBase('test/fixtures');
+        fixture.setBase('test/src/fixtures');
         fixture.load('1no.explicit.configuration.html');
 
         window.addthis = {};
