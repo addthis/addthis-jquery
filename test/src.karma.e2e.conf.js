@@ -15,14 +15,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './test/src/fixtures/**/*.html',
-      './test/src/e2e/**/*.js',
+      'test/src/fixtures/**/*.html',
+      'test/src/e2e/**/*.js',
       {
-        pattern: './node_modules/jquery/dist/jquery.js',
+        pattern: 'node_modules/jquery/dist/jquery.js',
         included: false
       },
       {
-        pattern: './src/jquery-addthis.js',
+        pattern: 'src/jquery-addthis.js',
         included: false
       }
     ],
@@ -34,8 +34,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './src/**/*.js'                  : 'coverage',
-      './test/src/fixtures/**/*.html'  : 'html2js'
+      'src/**/*.js'                  : 'coverage',
+      'test/src/fixtures/**/*.html'  : 'html2js'
     },
 
     coverageReporter: {
