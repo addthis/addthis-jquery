@@ -80,25 +80,36 @@ gulp.task('jslint', function() {
         .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('unit-test', function(done) {
+gulp.task('src-unit-test', function(done) {
     new karmaServer({
         configFile: __dirname + '/test/src.karma.unit.conf.js',
         singleRun: true
     }, done).start();
 });
 
-gulp.task('e2e-test', function(done) {
+gulp.task('src-e2e-test', function(done) {
     new karmaServer({
         configFile: __dirname + '/test/src.karma.e2e.conf.js',
         singleRun: true
     }, done).start();
 });
 
+gulp.task('unit-test', function() {
+    return gulp.start(
+        'src-unit-test'
+    );
+});
+
+gulp.task('e2e-test', function() {
+    return gulp.start(
+        'src-e2e-test'
+    );
+});
 
 gulp.task('test', function() {
     return gulp.start(
-        'unit-test',
-        'e2e-test'
+        'src-unit-test',
+        'src-e2e-test'
     );
 });
 
