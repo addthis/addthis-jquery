@@ -82,7 +82,7 @@ gulp.task('jslint', function() {
 
 gulp.task('unit-test', function(done) {
     new karmaServer({
-        configFile: __dirname + '/karma.unit.conf.js',
+        configFile: __dirname + '/test/karma.unit.conf.js',
         singleRun: true
     }, done).start();
 });
