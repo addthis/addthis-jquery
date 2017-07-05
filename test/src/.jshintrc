@@ -1,11 +1,3 @@
 {
     "extends"       : "../.jshintrc",
-    "globals"       : {
-        "afterEach": true,
-        "beforeEach": true,
-        "describe": true,
-        "expect": true,
-        "it": true,
-        "spyOn": true
-    }
 }
