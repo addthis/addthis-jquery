@@ -24,18 +24,18 @@ tool.appendTo(toolDivSelector);
 
 // function to change the share title on the AddThis tool in the tool variable
 function switchTitle() {
-    if (currentToolTitle === initialTitle) {
+    if (currentToolTitle === alternateTitle) {
         // if the last title is the initial title
         // change the tool saved in the tool variable to use the alternate title
-        tool.shareTitle(alternateTitle);
-        // track last used share title
-        currentToolTitle = alternateTitle;
-    } else {
-        // else the last title is the alternate title
-        // change the tool saved in the tool variable to use the initial title
         tool.shareTitle(initialTitle);
         // track last used share title
         currentToolTitle = initialTitle;
+    } else {
+        // else the last title is the alternate title
+        // change the tool saved in the tool variable to use the initial title
+        tool.shareTitle(alternateTitle);
+        // track last used share title
+        currentToolTitle = alternateTitle;
     }
 
     // update the pre element with the current share title

@@ -23,18 +23,18 @@ tool.appendTo(toolDivSelector);
 
 // function to change the share URL on the AddThis tool in the tool variable
 function switchUrl() {
-    if (currentToolUrl === initialUrl) {
+    if (currentToolUrl === alternateUrl) {
         // if the last url is the initial url
         // change the tool saved in the tool variable to use the alternate url
-        tool.shareUrl(alternateUrl);
-        // track last used share url
-        currentToolUrl = alternateUrl;
-    } else {
-        // else the last url is the alternate url
-        // change the tool saved in the tool variable to use the initial url
         tool.shareUrl(initialUrl);
         // track last used share url
         currentToolUrl = initialUrl;
+    } else {
+        // else the last url is the alternate url
+        // change the tool saved in the tool variable to use the initial url
+        tool.shareUrl(alternateUrl);
+        // track last used share url
+        currentToolUrl = alternateUrl;
     }
 
     // update the pre element with the current share url

@@ -20,18 +20,18 @@ tool.appendTo(toolDivSelector);
 
 // function to change the default share URL used on AddThis tools
 function switchUrl() {
-    if (currentUrl === initialUrl) {
+    if (currentUrl === alternateUrl) {
         // if the last url is the initial url
         // change the default share url to the alternate url
-        $.addthis().shareUrl(alternateUrl);
-        // track last used share url
-        currentUrl = alternateUrl;
-    } else {
-        // else the last url is the alternate url
-        // change the default share url to the initial url
         $.addthis().shareUrl(initialUrl);
         // track last used share url
         currentUrl = initialUrl;
+    } else {
+        // else the last url is the alternate url
+        // change the default share url to the initial url
+        $.addthis().shareUrl(alternateUrl);
+        // track last used share url
+        currentUrl = alternateUrl;
     }
 
     // update the pre element with the current share url
