@@ -94,6 +94,13 @@ gulp.task('src-e2e-test', function(done) {
     }, done).start();
 });
 
+gulp.task('examples-e2e-test', function(done) {
+    new karmaServer({
+        configFile: __dirname + '/test/examples.karma.e2e.conf.js',
+        singleRun: true
+    }, done).start();
+});
+
 gulp.task('unit-test', function() {
     return gulp.start(
         'src-unit-test'
@@ -102,7 +109,8 @@ gulp.task('unit-test', function() {
 
 gulp.task('e2e-test', function() {
     return gulp.start(
-        'src-e2e-test'
+        'src-e2e-test',
+        'examples-e2e-test'
     );
 });
 
