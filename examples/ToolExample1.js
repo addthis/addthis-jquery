@@ -16,7 +16,6 @@ var currentToolClass;
 
 // function for changing tool on page
 function changeToolAction() {
-    //console.log('changeToolAction start ', currentToolClass);
     // delete old tool
     $(toolDivSelector).empty();
     if (currentToolClass === addthisToolConfig2.tool) {
