@@ -78,21 +78,23 @@ describe('ToolExample9', function() {
         expect(numberOfImagesOnPage).toEqual(1);
     });
 
-    it('calling addAnotherCat should add another image onto the page', function() {
-        window.addAnotherCat();
+    it('clicking the button should add another image onto the page', function() {
+        var button = document.getElementById('addCat');
+        button.click();
         var numberOfImagesOnPage = $('.img-thumbnail').length;
         expect(numberOfImagesOnPage).toEqual(2);
     });
 
 
-    it('calling changeCat more times than there are images queued should automatically replenish imageQueue', function() {
+    it('clicking the button more times than there are images queued should automatically replenish imageQueue', function() {
         expect($.ajax.calls.count()).toEqual(1);
+        var button = document.getElementById('addCat');
 
         while (window.imageQueue.length > 0) {
-            window.addAnotherCat();
+            button.click();
         }
         var numberOfImagesOnPage1 = $('.img-thumbnail').length;
-        window.addAnotherCat();
+        button.click();
         var numberOfImagesOnPage2 = $('.img-thumbnail').length;
 
         expect($.ajax.calls.count()).toEqual(2);

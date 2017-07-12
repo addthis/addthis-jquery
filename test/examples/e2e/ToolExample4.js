@@ -49,11 +49,12 @@ describe('ToolExample4', function() {
         expect(initialUrl).toEqual(window.initialUrl);
     });
 
-    it('switchUrl should toggle url attribute on desired div', function() {
+    it('clicking the button should toggle url attribute on desired div', function() {
+        var button = document.getElementById('changeUrl');
         var initialUrl = addthis_share.url;
-        window.switchUrl();
+        button.click();
         var secondUrl = addthis_share.url;
-        window.switchUrl();
+        button.click();
         var thirdUrl = addthis_share.url;
 
         expect(initialUrl).not.toEqual(secondUrl);

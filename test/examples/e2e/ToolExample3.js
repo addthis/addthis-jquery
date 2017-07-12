@@ -49,11 +49,12 @@ describe('ToolExample3', function() {
         expect(initialTitle).toEqual(window.initialTitle);
     });
 
-    it('switchTitle should toggle title attribute on desired div', function() {
+    it('clicking the button should toggle title attribute on desired div', function() {
+        var button = document.getElementById('changeTitle');
         var initialTitle = $(toolDivSelector + ' div div').data('title');
-        window.switchTitle();
+        button.click();
         var secondTitle = $(toolDivSelector + ' div div').data('title');
-        window.switchTitle();
+        button.click();
         var thirdTitle = $(toolDivSelector + ' div div').data('title');
 
         expect(initialTitle).not.toEqual(secondTitle);

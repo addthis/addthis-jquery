@@ -51,9 +51,10 @@ describe('ToolExample2', function() {
 
     it('switchUrl should toggle url attribute on desired div', function() {
         var initialUrl = $(toolDivSelector + ' div div').data('url');
-        window.switchUrl();
+        var button = document.getElementById('changeUrl');
+        button.click();
         var secondUrl = $(toolDivSelector + ' div div').data('url');
-        window.switchUrl();
+        button.click();
         var thirdUrl = $(toolDivSelector + ' div div').data('url');
 
         expect(initialUrl).not.toEqual(secondUrl);

@@ -78,25 +78,28 @@ describe('ToolExample10', function() {
         expect(numberOfImagesOnPage).toEqual(1);
     });
 
-    it('calling changeCat should not add another image onto the page', function() {
-        window.changeCat();
+    it('clicking the button should not add another image onto the page', function() {
+        var button = document.getElementById('addCat');
+        button.click();
         var numberOfImagesOnPage = $('.img-thumbnail').length;
         expect(numberOfImagesOnPage).toEqual(1);
     });
 
-    it('calling changeCat should change the URL of the image', function() {
+    it('clicking the button should change the URL of the image', function() {
         var imageSrc1 = $('.img-thumbnail')[0].src;
-        window.changeCat();
+        var button = document.getElementById('addCat');
+        button.click();
         var imageSrc2 = $('.img-thumbnail')[0].src;
         expect(imageSrc1).not.toEqual(imageSrc2);
     });
 
-    it('calling changeCat more times than there are images queued should automatically replenish imageQueue', function() {
+    it('clicking the button more times than there are images queued should automatically replenish imageQueue', function() {
+        var button = document.getElementById('addCat');
         while (window.imageQueue.length > 0) {
-            window.changeCat();
+            button.click();
         }
         var imageSrc1 = $('.img-thumbnail')[0].src;
-        window.changeCat();
+        button.click();
         var imageSrc2 = $('.img-thumbnail')[0].src;
 
         expect(imageSrc1).not.toEqual(imageSrc2);

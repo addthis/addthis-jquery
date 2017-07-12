@@ -53,19 +53,22 @@ describe('ToolExample8', function() {
         expect(impsumsOnPage).toEqual(1);
     });
 
-    it('addAnotherIpsum should add another ipsum to the page', function() {
-        window.addAnotherIpsum();
+    it('clicking the button should add another ipsum to the page', function() {
+        var button = document.getElementById('addIpsum');
+
+        button.click();
         var impsumsOnPage = $('#ipsumContainer').children('div').length;
         expect(impsumsOnPage).toEqual(2);
     });
 
-    it('calling addAnotherIpsum more times than there are ipsums should not add more ipsums', function() {
+    it('clicking the button more times than there are ipsums should not add more ipsums', function() {
+        var button = document.getElementById('addIpsum');
         while (window.queuedIpsums.length > 0) {
-            window.addAnotherIpsum();
+            button.click();
         }
 
         var maxIpsums = $('#ipsumContainer').children('div').length;
-        window.addAnotherIpsum();
+        button.click();
         var impsumsOnPage = $('#ipsumContainer').children('div').length;
 
         expect(impsumsOnPage).toEqual(maxIpsums);

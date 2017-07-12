@@ -49,11 +49,12 @@ describe('ToolExample6', function() {
         expect(initialClass).toEqual(window.addthisToolConfig1.tool);
     });
 
-    it('changeToolAction should toggle class on desired div', function() {
+    it('clicking the button should toggle class on desired div', function() {
+        var button = document.getElementById('changeTool');
         var initialClass = $(toolDivSelector + ' div div').attr('class');
-        window.changeToolAction();
+        button.click();
         var secondClass = $(toolDivSelector + ' div div').attr('class');
-        window.changeToolAction();
+        button.click();
         var thirdClass = $(toolDivSelector + ' div div').attr('class');
 
         expect(initialClass).not.toEqual(secondClass);
