@@ -30,7 +30,7 @@ describe('ToolExample5', function() {
                             var toolExampleIntervalId = window.setInterval(function() {
                                 if (typeof window.switchGlobalTitle !== 'undefined') {
                                     clearInterval(toolExampleIntervalId);
-                                    done();
+                                    window.setTimeout(done);
                                 }
                             });
                         }, 50);
