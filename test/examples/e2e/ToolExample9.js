@@ -18,7 +18,6 @@ describe('ToolExample9', function() {
 
         document.head.appendChild(jqueryScript);
 
-
         var mockAjaxObject = function() {
             return {
                 done: function(callback) {
@@ -115,7 +114,6 @@ describe('ToolExample9', function() {
         var numberOfImagesOnPage = $('.img-thumbnail').length;
         expect(numberOfImagesOnPage).toEqual(2);
     });
-
 
     it('clicking the button more times than there are images queued should automatically replenish imageQueue', function() {
         expect($.ajax.calls.count()).toEqual(1);

@@ -144,7 +144,7 @@ describe('ToolExample10', function() {
         delete window.addthis_plugin_info;
 
         delete window.changeCat;
-        delete window.getMoreImages;
+        delete window.getMoreImages2;
         delete window.imageQueue;
     });
 });
