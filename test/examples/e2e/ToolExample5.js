@@ -28,7 +28,7 @@ describe('ToolExample5', function() {
                         $(document).ready(function() {
                             document.body.appendChild(toolExampleJs);
                             var toolExampleIntervalId = window.setInterval(function() {
-                                if (typeof window.switchTitle !== 'undefined') {
+                                if (typeof window.switchGlobalTitle !== 'undefined') {
                                     clearInterval(toolExampleIntervalId);
                                     done();
                                 }
@@ -40,8 +40,8 @@ describe('ToolExample5', function() {
         }, 50);
     });
 
-    it('switchTitle should be a function', function() {
-        expect(typeof window.switchTitle).toEqual('function');
+    it('switchGlobalTitle should be a function', function() {
+        expect(typeof window.switchGlobalTitle).toEqual('function');
     });
 
     it('should load with initial title attribute in addthis_share', function() {
@@ -76,6 +76,6 @@ describe('ToolExample5', function() {
         delete window.addthisToolConfig1;
         delete window.currentToolTitle;
         delete window.tool;
-        delete window.switchTitle;
+        delete window.switchGlobalTitle;
     });
 });

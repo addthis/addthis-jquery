@@ -57,8 +57,8 @@ describe('ToolExample10', function() {
         }, 50);
     });
 
-    it('getMoreImages should be a function', function() {
-        expect(typeof window.getMoreImages).toEqual('function');
+    it('getMoreImages2 should be a function', function() {
+        expect(typeof window.getMoreImages2).toEqual('function');
     });
 
     it('changeCat should be a function', function() {

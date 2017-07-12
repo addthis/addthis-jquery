@@ -18,7 +18,7 @@ var tool = $.addthis().tool(addthisToolConfig1);
 tool.appendTo(toolDivSelector);
 
 // function to change the default share title used on AddThis tools
-function switchTitle() {
+function switchGlobalTitle() {
     if (currentTitle === alternateTitle) {
         // if the last title is the initial title
         // change the default share title to the alternate title
@@ -38,6 +38,6 @@ function switchTitle() {
 }
 
 // bootstrap by setting the initial share title
-switchTitle();
+switchGlobalTitle();
 // call switchTitle function whenever someone clicks on the button
-$('button#changeTitle').click(switchTitle);
+$('button#changeTitle').click(switchGlobalTitle);

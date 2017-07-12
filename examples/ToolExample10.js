@@ -5,7 +5,7 @@ var imageQueue = [];
 function changeCat() {
     if (imageQueue.length === 0) {
         // if we're out of cat images, get more, then recurse
-        getMoreImages(changeCat);
+        getMoreImages2(changeCat);
     } else {
         // if we have more cat images
         // pop next cat image url out of array
@@ -26,7 +26,7 @@ function changeCat() {
 
 // function for retreiving more cat images from The Cat API
 // takes 1 parameter: a callback that is executed once the images are retrieved and proceesed into imageQueue
-function getMoreImages(callback) {
+function getMoreImages2(callback) {
     // grab the XML from The Cat API
     $.ajax({
         url: 'https://thecatapi.com/api/images/get',

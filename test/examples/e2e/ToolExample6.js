@@ -28,7 +28,7 @@ describe('ToolExample6', function() {
                         $(document).ready(function() {
                             document.body.appendChild(toolExampleJs);
                             var toolExampleIntervalId = window.setInterval(function() {
-                                if (typeof window.changeToolAction !== 'undefined') {
+                                if (typeof window.changeToolAction2 !== 'undefined') {
                                     clearInterval(toolExampleIntervalId);
                                     done();
                                 }
@@ -40,8 +40,8 @@ describe('ToolExample6', function() {
         }, 50);
     });
 
-    it('changeToolAction should be a function', function() {
-        expect(typeof window.changeToolAction).toEqual('function');
+    it('changeToolAction2 should be a function', function() {
+        expect(typeof window.changeToolAction2).toEqual('function');
     });
 
     it('tool should load with initial class name', function() {
@@ -74,6 +74,6 @@ describe('ToolExample6', function() {
         delete window.addthisToolConfig1;
         delete window.addthisToolConfig2;
         delete window.currentToolClass;
-        delete window.changeToolAction;
+        delete window.changeToolAction2;
     });
 });

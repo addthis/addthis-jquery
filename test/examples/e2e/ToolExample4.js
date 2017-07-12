@@ -28,7 +28,7 @@ describe('ToolExample4', function() {
                         $(document).ready(function() {
                             document.body.appendChild(toolExampleJs);
                             var toolExampleIntervalId = window.setInterval(function() {
-                                if (typeof window.switchUrl !== 'undefined') {
+                                if (typeof window.switchGlobalUrl !== 'undefined') {
                                     clearInterval(toolExampleIntervalId);
                                     done();
                                 }
@@ -40,8 +40,8 @@ describe('ToolExample4', function() {
         }, 50);
     });
 
-    it('switchUrl should be a function', function() {
-        expect(typeof window.switchUrl).toEqual('function');
+    it('switchGlobalUrl should be a function', function() {
+        expect(typeof window.switchGlobalUrl).toEqual('function');
     });
 
     it('should load with initial url attribute in addthis_share', function() {
@@ -76,6 +76,6 @@ describe('ToolExample4', function() {
         delete window.addthisToolConfig1;
         delete window.currentToolUrl;
         delete window.tool;
-        delete window.switchUrl;
+        delete window.switchGlobalUrl;
     });
 });

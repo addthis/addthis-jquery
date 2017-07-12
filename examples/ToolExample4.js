@@ -19,7 +19,7 @@ var tool = $.addthis().tool(addthisToolConfig1);
 tool.appendTo(toolDivSelector);
 
 // function to change the default share URL used on AddThis tools
-function switchUrl() {
+function switchGlobalUrl() {
     if (currentUrl === alternateUrl) {
         // if the last url is the initial url
         // change the default share url to the alternate url
@@ -39,6 +39,6 @@ function switchUrl() {
 }
 
 // bootstrap by setting the initial share url
-switchUrl();
+switchGlobalUrl();
 // call switchUrl function whenever someone clicks on the button
-$('button#changeUrl').click(switchUrl);
+$('button#changeUrl').click(switchGlobalUrl);

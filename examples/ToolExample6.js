@@ -15,7 +15,7 @@ var addthisToolConfig2 = {
 var currentToolClass;
 
 // function for changing tool on page
-function changeToolAction() {
+function changeToolAction2() {
     // delete old tool
     $(toolDivSelector).empty();
     if (currentToolClass === addthisToolConfig2.tool) {
@@ -41,6 +41,6 @@ function changeToolAction() {
 }
 
 // bootstrap by adding first tool onto page
-changeToolAction();
+changeToolAction2();
 // call changeTool function whenever someone clicks on the button
-$('button#changeTool').click(changeToolAction);
+$('button#changeTool').click(changeToolAction2);
