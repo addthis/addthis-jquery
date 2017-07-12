@@ -77,7 +77,7 @@ describe('ToolExample9', function() {
                             var toolExampleIntervalId = window.setInterval(function() {
                                 if (typeof window.addAnotherCat !== 'undefined') {
                                     clearInterval(toolExampleIntervalId);
-                                    window.setTimeout(done);
+                                    $(document).ready(done);
                                 }
                             });
                         }, 50);
