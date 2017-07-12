@@ -10,26 +10,14 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'fixture'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'examples/**/*.html',
-      'examples/**/*.xml',
-      'test/examples/e2e/**/*.js',
-      {
-        pattern: 'examples/**/*.js',
-        included: false
-      },
-      {
-        pattern: 'node_modules/jquery/dist/jquery.js',
-        included: false
-      },
-      {
-        pattern: 'src/jquery-addthis.js',
-        included: false
-      }
+      'examples/mocks.js',
+      'examples/**/*.js',
+      'test/examples/unit/ToolExample*.js'
     ],
 
     // list of files to exclude
@@ -39,13 +27,11 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'examples/**/*.js'    : 'coverage',
-      'examples/**/*.html'  : 'html2js',
-      'examples/**/*.xml'   : 'html2js'
+      'examples/**/*.js'    : 'coverage'
     },
 
     coverageReporter: {
-        dir : 'test/reports/examples/e2e/',
+        dir : 'test/reports/examples/unit/',
         reporters: [
             { type: 'html', subdir: 'coverage_html' },
             { type: 'cobertura', subdir: 'coverage_cobertura' }
@@ -53,7 +39,7 @@ module.exports = function(config) {
     },
 
     htmlReporter: {
-        outputDir: 'test/reports/examples/e2e/bytest_html',
+        outputDir: 'test/reports/examples/unit/bytest_html',
 
         // Optional
         pageTitle: 'Unit Tests',
@@ -64,7 +50,7 @@ module.exports = function(config) {
     },
 
     junitReporter: {
-      outputDir: 'test/reports/examples/e2e/bytest_junit'
+      outputDir: 'test/reports/examples/unit/bytest_junit'
     },
 
     // test results reporter to use
@@ -93,8 +79,8 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-        'Chrome',
-        'Firefox',
+        //'Chrome',
+        //'Firefox',
         //'Safari',
         'PhantomJS'
     ],

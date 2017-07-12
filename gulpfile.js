@@ -101,9 +101,17 @@ gulp.task('examples-e2e-test', function(done) {
     }, done).start();
 });
 
+gulp.task('examples-unit-test', function(done) {
+    new karmaServer({
+        configFile: __dirname + '/test/examples.karma.unit.conf.js',
+        singleRun: true
+    }, done).start();
+});
+
 gulp.task('unit-test', function() {
     return gulp.start(
-        'src-unit-test'
+        'src-unit-test',
+        'examples-unit-test'
     );
 });
 
@@ -117,7 +125,9 @@ gulp.task('e2e-test', function() {
 gulp.task('test', function() {
     return gulp.start(
         'src-unit-test',
-        'src-e2e-test'
+        'src-e2e-test',
+        'examples-unit-test',
+        'examples-e2e-test'
     );
 });
 
