@@ -46,7 +46,7 @@ Builds the documentaiton
 ### <code>node server.js</code>
 Serves all the code, documentation and examples sites locally at `http://localhost:3003`
 
-Built Code: http://localhost:3003/dist/official-addthis-angularjs.js
+Built Code: http://localhost:3003/dist/jquery-addthis.min.js
 Documentation: http://localhost:3003/docs/
 Test Reports: http://localhost:3002/test/reports/
 Example Site: http://localhost:3003/examples/index.html
