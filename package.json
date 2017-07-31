@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/addthis/jquery-addthis.git"
+    "url": "git+https://github.com/oracle/jquery-addthis.git"
   },
   "bugs": {
     "email": "help@addthis.com"
