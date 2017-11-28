@@ -1,4 +1,4 @@
-# [![jquery-addthis](http://cache.addthiscdn.com/www/160830bfaefda/style/images/wrapper/addthis-logo.svg)](https://www.addthis.com) jquery-addthis
+# [![addthis-jquery](http://cache.addthiscdn.com/www/160830bfaefda/style/images/wrapper/addthis-logo.svg)](https://www.addthis.com) addthis-jquery
 > Add free and Pro AddThis tools with dynamic jQuery sites. This jQuery plugin is smart about reacting when you add new DOM elements onto the page and helps you add AddThis tools onto page after the page has loaded. Requires a free [AddThis account](https://www.addthis.com/register).
 
 
