@@ -1,5 +1,11 @@
 # [![addthis-jquery](http://cache.addthiscdn.com/www/160830bfaefda/style/images/wrapper/addthis-logo.svg)](https://www.addthis.com) addthis-jquery
-> Add free and Pro AddThis tools with dynamic jQuery sites. This jQuery plugin is smart about reacting when you add new DOM elements onto the page and helps you add AddThis tools onto page after the page has loaded. Requires a free [AddThis account](https://www.addthis.com/register).
+> Grow your website with audience engagement tools trusted by over 15 million sites. The AddThis jQuery plugin is smart about reacting when you add new DOM elements onto the page and helps you add AddThis tools onto page after the page has loaded. This plugin requires a free [AddThis account](https://www.addthis.com/register).
+
+The AddThis jQuery plugin helps you use AddThis tools on your dynamic jQuery websites. It has jQuery-specific functionality to:
+
+- Create AddThis tools elements to add onto the page whenever desired
+- Customize the share URL and title for specific AddThis tools as well as all AddThis tools
+- Change the share URL and title on an AddThis tool at any time
 
 
 ## Installation
@@ -29,6 +35,8 @@ Include the file in HTML after jQuery and before any code where you use `$.addth
 ```
 
 #### Set a Profile ID
+
+When you create an account on addthis.com, we assign you a profile ID to provide analytics, configure settings, etc. To find your profile ID, log in to your addthis.com account, select the three dots in the top navigation, select "More," and identify your profile ID in the "General" section. Select an option below to set up your profile ID for the module.
 
 Include `addthis_widget.js` in HTML with an AddThis profile ID. Replace `YOUR_PROFILE_ID` below with a profile ID. This can be added anywhere on your page.
 
@@ -93,6 +101,8 @@ Replace `http://example.com` with the URL to share when a visitor clicks on one 
 Replace `Check this out:` with the title to share when a visitor clicks on one of the sharing buttons.
 
 This will not override the share URL or title for tools created using the `url` and `title` property.
+
+#### Have questions or need a hand? Reach out to us at help@addthis.com or on Twitter at [@AddThisSupport](https://twitter.com/addthissupport).
 
 ## More Resources
 
