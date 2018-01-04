@@ -71,7 +71,7 @@ $.addthis().tool({tool: 'addthis_sharing_toolbox'})
     .appendTo('.my-div-where-i-want-addthis-tools');
 ```
 
-Replace `addthis_sharing_toolbox` with the name for the AddThis inline share tool desired.
+Replace `addthis_sharing_toolbox` with the name for the AddThis inline share tool desired. f you’re adding inline buttons or Tip Jar buttons, replace `addthis_inline_share_toolbox` with the class for the desired tool. To get the class name, visit your addthis.com dashboard, add a tool, navigate to the Get The Code page, and identify the class name in the final step on the Get The Code page.
 
 Replace `http://example.com` with the URL to share when a visitor clicks on one of the sharing buttons, or, alternately, leave the `url` property out completely.
 
